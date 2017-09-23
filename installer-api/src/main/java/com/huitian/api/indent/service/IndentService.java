@@ -5,6 +5,10 @@ import com.huitian.po.indent.Indent;
 
 public interface IndentService extends StringIdBaseService<Indent> {
     
+    /**
+     * 绘天接口测试
+     * 
+     */
     String BEAN_NAME = "indentService";
    	
 }
