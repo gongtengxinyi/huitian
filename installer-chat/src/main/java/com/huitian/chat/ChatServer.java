@@ -1,16 +1,11 @@
 package com.huitian.chat;
 
-
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -22,17 +17,16 @@ import javax.websocket.server.ServerEndpoint;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.aspectj.apache.bcel.classfile.Constant;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
-import com.huitian.context.SpringContextHolder;
+import com.huitian.constants.EnumMessageMode;
+import com.huitian.po.indent.Indent;
 
 import sun.misc.BASE64Decoder;
 
 /***
- * 绘天
- * 即时通讯服务的服务模块<br/>
+ * 绘天加工任务调度模块，根据用户选择的加工中心进行推送，如果加工征信正在工作，则放入非阻塞对列中FIFO,先进先出。
  * 
  * @author 丁建磊
  *
@@ -41,50 +35,18 @@ import sun.misc.BASE64Decoder;
 @ServerEndpoint("/chatServer")
 public class ChatServer {
 	private static Log logger = LogFactory.getLog(ChatServer.class);
-	/** AtomicInteger：线程安全的整数对象 */
-	private static AtomicInteger onlineCount = new AtomicInteger(0);// 线程安全整数对象
 	private static long MAX_BIG_LONG = 1024 * 4 * 1024;
-	/** roomId与一个集合的哈希。集合中存储当前房间的所有用户 */
-	private static ConcurrentHashMap<String, CopyOnWriteArraySet<String>> roomToChatUserHashMap = new ConcurrentHashMap<String, CopyOnWriteArraySet<String>>();
-	/** 用户与chatServer实例的哈希。 */
-	private static ConcurrentHashMap<String, ChatServer> chatUserToChatServer = new ConcurrentHashMap<String, ChatServer>();
+	/** 加工设备对应 chatServer */
+	private static ConcurrentHashMap<String, ChatServer> centerAccountIdToChatServer = new ConcurrentHashMap<String, ChatServer>();
+	/** 排队。 queue.isEmpty() offer poll */
+	private static ConcurrentHashMap<String, ConcurrentLinkedQueue<Indent>> centerAccountIdToQueue = new ConcurrentHashMap<String, ConcurrentLinkedQueue<Indent>>();
 	/** token验证 **/
 	private String token;
-	/** 房间号 **/
-	private String roomId;
-	/** chatUser 主键Id **/
-	private String chatUserId;
-
-	/**
-	 * concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。若要实现服务端与单一客户端通信的话，
-	 * 可以使用Map来存放，其中Key可以为用户标识·1
-	 */
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public String getRoomId() {
-		return roomId;
-	}
-
-	public void setRoomId(String roomId) {
-		this.roomId = roomId;
-	}
-
-	public String getChatUserId() {
-		return chatUserId;
-	}
-
-	public void setChatUserId(String chatUserId) {
-		this.chatUserId = chatUserId;
-	}
-
+	private String terminalType;// 连接过来的类型，可能是接口或者是pc终端
 	/** 与某个客户端的连接会话，需要通过它来给客户端发送数据 */
 	private Session session;
+	// 设备id
+	private String centerAccountId;
 
 	public Session getSession() {
 		return session;
@@ -95,55 +57,45 @@ public class ChatServer {
 
 	}
 
-	/**
-	 * 连接建立成功调用的方法<br>
-	 * 1、解析连接字符串，获得用户名、房间名<br>
-	 * 2、取得发起人的聊天账号<br>
-	 * 3、将当前会话websocket加入到hashmap，以uuid为键<br>
-	 *
-	 * @param session
-	 *            可选的参数。session为与某个客户端的连接会话，需要通过它来给客户端发送数据
-	 */
 	@OnOpen
 	public void onOpen(Session session) {
 		session.setMaxTextMessageBufferSize((int) MAX_BIG_LONG);
-		addOnlineCount(); // 在线数加1--必须先加1---错误的时候会减1
 		this.session = session;
 		if (!parseQueryString(session)) // 如果未能取得用户id和type，退出
 			return;
-		addChatUserToHashMap(roomId, chatUserId);
 		try {
-			// 发一个应答标记，表示已经成功登陆，没有构造
-			sendMessage("SUCCESS");
-		} catch (IOException e) {
+			checkCenterAccount();// 检查是否是系统的账号
+			addChatUserToHashMap(centerAccountId, this);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * 一个房间对应的一个chatuser列表 发消息时候进行遍历操作
-	 * 
-	 * @param chatUserId
-	 * @param chatUserId
-	 * @return
-	 */
-	private boolean addChatUserToHashMap(String roomId, String chatUserId) {
+	private boolean addChatUserToHashMap(String centerAccountId, ChatServer chatServer) {
 		try {
-			CopyOnWriteArraySet<String> chatUserIdSet = null;
-			if (roomToChatUserHashMap.containsKey(roomId)) {
-				chatUserIdSet = roomToChatUserHashMap.get(roomId);
+			ConcurrentLinkedQueue<Indent> queue = null;
+			centerAccountIdToChatServer.put(centerAccountId, chatServer);
+			if (centerAccountIdToQueue.containsKey(centerAccountId)) {
+				queue = centerAccountIdToQueue.get(centerAccountId);
 			} else {
-				chatUserIdSet = new CopyOnWriteArraySet<String>();
+				queue = new ConcurrentLinkedQueue<Indent>();
 			}
-			chatUserIdSet.add(chatUserId);
-			roomToChatUserHashMap.put(roomId, chatUserIdSet);
-			chatUserToChatServer.put(chatUserId, this);
+			centerAccountIdToQueue.put(centerAccountId, queue);
 			return true;
 		} catch (Exception e) {
+			logger.error("添加账号出错");
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	/**
+	 * 检查是否是系统账号
+	 */
+	private void checkCenterAccount() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -153,24 +105,12 @@ public class ChatServer {
 	 * @param terminalUuid
 	 * @return
 	 */
-	private boolean removeChatUserFromRoomHashMap(String roomId, String chatUserId) {
+	private boolean removeChatUserFromRoomHashMap(String centerAccountId) {
 		try {
-			CopyOnWriteArraySet<String> chatUserIdSet = null;
-			if (roomToChatUserHashMap.containsKey(roomId)) {// 如果存在
-				chatUserIdSet = roomToChatUserHashMap.get(chatUserId);// 取得chatUserId的集合
-			} else {
-				return true;
-			}
-			chatUserIdSet.remove(chatUserId);// 从集合中移除
-			if (chatUserIdSet.size() == 0) {// 如果已经没有连接终端
-				roomToChatUserHashMap.remove(roomId);// 则清除
-			} else {
-				roomToChatUserHashMap.put(roomId, chatUserIdSet);// 更新哈希
-			}
-			ChatServer chatServer = chatUserToChatServer.get(chatUserId);
+			ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
 			// 释放资源，清空chatServer
 			chatServer = null;
-			chatUserToChatServer.remove(chatUserId);// 将chatServer的实例从哈希中移除。
+			centerAccountIdToChatServer.remove(centerAccountId);// 将chatServer的实例从哈希中移除。
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -199,10 +139,10 @@ public class ChatServer {
 				return false;
 			for (int i = 0; i < queryStringArray.length; i++) {// ‘对查询字符串进行检查，如果有uid等参数，则取出病赋值
 				if (queryStringArray[i].toUpperCase().startsWith(chatUserIdStart)) {// 用户id
-					this.setChatUserId(queryStringArray[i].split("=")[1]);
+					// this.setChatUserId(queryStringArray[i].split("=")[1]);
 				}
 				if (queryStringArray[i].toUpperCase().startsWith(roomIdStart)) {// 类型
-					this.setRoomId(queryStringArray[i].split("=")[1]);
+					// this.setRoomId(queryStringArray[i].split("=")[1]);
 				}
 			}
 		} catch (Exception e) {// 解析查询字符串发生错误--传递的查询字符串错误
@@ -233,8 +173,7 @@ public class ChatServer {
 	@OnClose
 	public void onClose(Session session) {
 		try {
-			removeChatUserFromRoomHashMap(this.roomId, this.chatUserId);
-			subOnlineCount(); // 在线数减1
+			removeChatUserFromRoomHashMap(this.centerAccountId);
 		} catch (Exception e) {
 
 		}
@@ -257,55 +196,95 @@ public class ChatServer {
 		Gson gson = null;
 		try {// 解析json串
 			gson = new Gson();
-		//	ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
+			ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 			// 解析json出错
-//			if (chatMessage == null)
-//				return;
+			if (chatMessage == null)
+				return;
+			parseChatMessage(chatMessage);
 			/**
 			 * 目的为了以后对每个模块进行拓展，所以分开写
 			 * 
 			 */
 			// 如果是图片类型的消息体
-//			if (StringUtils.equals(chatMessage.getMessageType(), EnumMessageType.IMAGE.name())) {
-//				try {
-//					boolean dealImageResult = dealBinary(chatMessage);// 处理图片结果
-//					if (!dealImageResult) {
-//						return;// 如果没生成，则返回
-//					}
-//				} catch (Exception e) {
-//					logger.error("处理图片异常" + e.getMessage());
-//				}
-//			}
+			// if (StringUtils.equals(chatMessage.getMessageType(),
+			// EnumMessageType.IMAGE.name())) {
+			// try {
+			// boolean dealImageResult = dealBinary(chatMessage);// 处理图片结果
+			// if (!dealImageResult) {
+			// return;// 如果没生成，则返回
+			// }
+			// } catch (Exception e) {
+			// logger.error("处理图片异常" + e.getMessage());
+			// }
+			// }
 			// 处理小视频
-//			else if ((StringUtils.equals(chatMessage.getMessageType(), EnumMessageType.VIDEO.name()))) {
-//				try {
-//					boolean dealVideoResult = dealBinary(chatMessage);
-//					if (!dealVideoResult) {
-//						return;
-//					}
-//				} catch (Exception e) {
-//					logger.error("处理小视频异常" + e.getMessage());
-//				}
-//
-//			}
+			// else if ((StringUtils.equals(chatMessage.getMessageType(),
+			// EnumMessageType.VIDEO.name()))) {
+			// try {
+			// boolean dealVideoResult = dealBinary(chatMessage);
+			// if (!dealVideoResult) {
+			// return;
+			// }
+			// } catch (Exception e) {
+			// logger.error("处理小视频异常" + e.getMessage());
+			// }
+			//
+			// }
 			// 处理二进制文件
-//			else if ((StringUtils.equals(chatMessage.getMessageType(), EnumMessageType.BINARY.name()))) {
-//				try {
-//					boolean dealBinaryResult = dealBinary(chatMessage);
-//					if (!dealBinaryResult) {
-//						return;
-//					}
-//				} catch (Exception e) {
-//					// TODO: handle exception
-//					logger.error("处理文件异常" + e.getMessage());
-//				}
-//			}
-//			chatMessage.setImageBase64("");// 清空串
-//			// 不用做NPE判断，因为chatUser如果为空 则推出closeSession 所以不可能为空
-//			chatMessage.setChatName(this.chatUser.getUsername());
-//			sendMessageToEveryoneInRoom(chatMessage);
+			// else if ((StringUtils.equals(chatMessage.getMessageType(),
+			// EnumMessageType.BINARY.name()))) {
+			// try {
+			// boolean dealBinaryResult = dealBinary(chatMessage);
+			// if (!dealBinaryResult) {
+			// return;
+			// }
+			// } catch (Exception e) {
+			// // TODO: handle exception
+			// logger.error("处理文件异常" + e.getMessage());
+			// }
+			// }
+			// chatMessage.setImageBase64("");// 清空串
+			// // 不用做NPE判断，因为chatUser如果为空 则推出closeSession 所以不可能为空
+			// chatMessage.setChatName(this.chatUser.getUsername());
+			// sendMessageToEveryoneInRoom(chatMessage);
 		} catch (Exception e) {// 发生错误即退出
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 包含各种消息，启动机器开始获取订单
+	 * 
+	 * @param chatMessage
+	 */
+	private void parseChatMessage(ChatMessage chatMessage) {
+		Gson gson = new Gson();
+		if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.APP_PUSH_INDENT.name())) {
+
+			try {
+				String centerAccountId = "";
+				Indent indent = null;
+				ConcurrentLinkedQueue<Indent> indentQueue = centerAccountIdToQueue.get(centerAccountId);
+				indentQueue.offer(indent);
+				centerAccountIdToQueue.put(centerAccountId, indentQueue);// 更新队列
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.START_MACHINE.name())) {
+			try {
+				String centerAccountId = "";
+				ConcurrentLinkedQueue<Indent> indentQueue = centerAccountIdToQueue.get(centerAccountId);
+				Indent indent = indentQueue.poll();
+				String message = gson.toJson(indent);
+				ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
+				chatServer.sendMessage(message);
+				centerAccountIdToQueue.put(centerAccountId, indentQueue);// 更新队列
+			} catch (Exception e) {
+			}
+		} else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.STOP_MACHINE.name())) {
+
+		} else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.WECHAT_PUSH_INDENT.name())) {
+
 		}
 	}
 
@@ -350,49 +329,50 @@ public class ChatServer {
 	 * @param chatMessage
 	 * @return boolean
 	 */
-//	private boolean dealBinary(ChatMessage chatMessage) {
-//		try {
-//			String uploadBasepath = StartUpListenerSpring.uploadBasepath;
-//			String downloadBasepath = StartUpListenerSpring.downloadBasepath;//
-//			String fileName = UuidUtil.get32UUID();// 文件名字
-//			String imgDatePart = datePart();
-//			StringBuilder sb = new StringBuilder();
-//			sb.append(uploadBasepath).append("/").append(imgDatePart).append("/");
-//			File dateFile = new File(sb.toString());
-//			StringBuilder binaryUrl = new StringBuilder();
-//			if (!dateFile.exists()) {
-//				try {
-//					dateFile.mkdirs();
-//				} catch (Exception e) {
-//					logger.error("创建文件夹失败" + e);
-//				}
-//			}
-//			String imgStr = chatMessage.getImageBase64();// 获取文件的base64串
-//			if (StringUtils.isNotBlank(imgStr)) {
-//				String imgStrTemp = "";
-//				String[] str = imgStr.split(",");
-//				imgStrTemp = str[1];// base串分割，要不生成不了完整文件
-//				binaryUrl.append(downloadBasepath).append("/").append(imgDatePart).append("/").append(fileName)
-//						.append(".").append(chatMessage.getSuffix());
-//				int result = generateImage(imgStrTemp,
-//						sb.append(fileName).append(".").append(chatMessage.getSuffix()).toString()); // 根据base64生成wenjian
-//				sb=null;//将资源释放
-//				if (result == 1) {
-//					chatMessage.setBinaryAddress(binaryUrl.toString());// 设置回填url
-//				} else {
-//					logger.info("生成二进制文件失败");// 此时文件有问题
-//					chatMessage.setBinaryAddress(binaryUrl.toString());// 设置回填url
-//				}
-//			} else {
-//				logger.info("二进制文件base64串为空");
-//			}
-//		} catch (Exception e) {
-//			logger.error("base64 字符串 解析 二进制错误" + e);
-//			e.printStackTrace();
-//			return false;
-//		}
-//		return true;
-//	}
+	// private boolean dealBinary(ChatMessage chatMessage) {
+	// try {
+	// String uploadBasepath = StartUpListenerSpring.uploadBasepath;
+	// String downloadBasepath = StartUpListenerSpring.downloadBasepath;//
+	// String fileName = UuidUtil.get32UUID();// 文件名字
+	// String imgDatePart = datePart();
+	// StringBuilder sb = new StringBuilder();
+	// sb.append(uploadBasepath).append("/").append(imgDatePart).append("/");
+	// File dateFile = new File(sb.toString());
+	// StringBuilder binaryUrl = new StringBuilder();
+	// if (!dateFile.exists()) {
+	// try {
+	// dateFile.mkdirs();
+	// } catch (Exception e) {
+	// logger.error("创建文件夹失败" + e);
+	// }
+	// }
+	// String imgStr = chatMessage.getImageBase64();// 获取文件的base64串
+	// if (StringUtils.isNotBlank(imgStr)) {
+	// String imgStrTemp = "";
+	// String[] str = imgStr.split(",");
+	// imgStrTemp = str[1];// base串分割，要不生成不了完整文件
+	// binaryUrl.append(downloadBasepath).append("/").append(imgDatePart).append("/").append(fileName)
+	// .append(".").append(chatMessage.getSuffix());
+	// int result = generateImage(imgStrTemp,
+	// sb.append(fileName).append(".").append(chatMessage.getSuffix()).toString());
+	// // 根据base64生成wenjian
+	// sb=null;//将资源释放
+	// if (result == 1) {
+	// chatMessage.setBinaryAddress(binaryUrl.toString());// 设置回填url
+	// } else {
+	// logger.info("生成二进制文件失败");// 此时文件有问题
+	// chatMessage.setBinaryAddress(binaryUrl.toString());// 设置回填url
+	// }
+	// } else {
+	// logger.info("二进制文件base64串为空");
+	// }
+	// } catch (Exception e) {
+	// logger.error("base64 字符串 解析 二进制错误" + e);
+	// e.printStackTrace();
+	// return false;
+	// }
+	// return true;
+	// }
 
 	/**
 	 * 将图片base64字符串转换成 图片
@@ -431,34 +411,6 @@ public class ChatServer {
 		}
 		return 1;
 	}
-
-//	private boolean sendMessageToEveryoneInRoom(ChatMessage chatMessage) {
-//		CopyOnWriteArraySet<String> chatUserIdSet;
-//		chatUserIdSet = roomToChatUserHashMap.get(this.roomId);// 取得此连接用户的所有连接终端
-//		Iterator<String> it = chatUserIdSet.iterator();
-//		String chatUserIt = "";
-//		ChatServer chatServer = null;
-//		while (it.hasNext()) {
-//			chatUserIt = it.next();
-//			chatServer = chatUserToChatServer.get(chatUserIt);// 取得连接终端
-//			if (chatServer == null) {
-//				chatUserToChatServer.remove(chatUserIt);
-//			} else {
-//				Gson gson = new Gson();
-//				String singleMsgJson = gson.toJson(chatMessage);
-//				gson = null;
-//				try {
-//					chatServer.sendMessage(singleMsgJson);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//					return false;
-//				}
-//			}
-//		}
-//		return true;
-//	}
-
 	/**
 	 * 向指定用户发送消息
 	 * 
@@ -466,7 +418,7 @@ public class ChatServer {
 	 * @return
 	 * @throws IOException
 	 */
-	public boolean sendMessage(String message) throws IOException {
+	public boolean sendMessage(String message) {
 
 		try {
 			if (!this.session.isOpen()) {
@@ -494,25 +446,8 @@ public class ChatServer {
 	public void onError(Session session, Throwable error) {
 		try {
 			closeSession(session);
-			removeChatUserFromRoomHashMap(this.roomId, this.chatUserId);
+			removeChatUserFromRoomHashMap(this.centerAccountId);
 		} catch (Exception e) {
-			// TODO: handle exception
-
 		}
 	}
-
-	/**
-	 * 在线计数递增
-	 */
-	public static void addOnlineCount() {
-		onlineCount.getAndIncrement();
-	}
-
-	/**
-	 * 在线计数递减
-	 */
-	public static void subOnlineCount() {
-		onlineCount.getAndDecrement();
-	}
-
 }
