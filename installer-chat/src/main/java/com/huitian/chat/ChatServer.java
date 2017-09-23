@@ -31,6 +31,7 @@ import com.huitian.context.SpringContextHolder;
 import sun.misc.BASE64Decoder;
 
 /***
+ * 绘天
  * 即时通讯服务的服务模块<br/>
  * 
  * @author 丁建磊
