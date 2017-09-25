@@ -8,6 +8,7 @@ package com.huitian.constants;
  *
  */
 public enum EnumMessageMode{
+    HEART_BREAK("心跳"),
   START_MACHINE("开始加工获取订单"),
   STOP_MACHINE("停止接收订单"),
   PC_START_CONNECT("桌面PC连接"),
