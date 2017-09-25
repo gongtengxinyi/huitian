@@ -28,7 +28,7 @@ import sun.misc.BASE64Decoder;
 /***
  * 绘天加工任务调度模块，根据用户选择的加工中心进行推送，如果加工征信正在工作，则放入非阻塞对列中FIFO,先进先出。
  * 
- * @author 丁建磊
+ * @author 丁建磊订单
  *
  */
 @Component
