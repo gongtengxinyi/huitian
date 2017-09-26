@@ -28,32 +28,9 @@ import com.huitian.util.Dto;
  */
 
 @Entity
-@Table(name = "HT_INDENT")
-public class Indent extends StringIdPo {
+@Table(name = "HT_INDENTPARAM")
+public class IndentParam extends StringIdPo {
 
-	/**
-	 * |id	           |varchar(32)       |否	|	 |	  id         |
-|accountId       |varchar(32)   |是	|    |	 用户id(HT_ACCOUNT表中的id)	|
-|productType       |varchar(20)   |是	|    |	 毛坯型号	|
-|machineCenter       |varchar(20)   |是	|    |	 加工中心	|
-|price         |decimal(11)   |是   |    |	 价格	 |
-|payStatus         |varchar(20)   |是   |    |    付款状态     |
-|payMode         |varchar(20)   |是   |    |    付款方式     |
-|payDate         |varchar(20)   |是   |    |    付款时间    |
-|status       |varchar(20)   |是   |    |    订单状态（正常，取消，退款等）    
-|machineStatus       |varchar(20)   |是   |    |    加工状态（未开始，加工中，已结束）    
-|deliverStatus       |varchar(20)   |是   |    |    发货状态（待发货，已发货）    
-|machineStartDate   	|date         |是   |   |   加工开始时间  |
-|machineEndDate   	|date         |是   |   |   加工结束时间  |
-|addressProv         |varchar(20)   |是   |    |    收货地址省份     |
-|addressCity         |varchar(20)   |是   |    |    收货地址城市    |
-|addressArea        |varchar(20)   |是   |    |    收货地址区县  |
-|addressDetail         |varchar(255)   |是   |    |    收货地址     |
-|receiverName       |varchar(20)   |是   |    |    收货人姓名  |
-|receiverMobile        |varchar(20)   |是   |    |    收货人电话  |
-	 */
-	
-	
 	@Column(name = "PICTYPE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String picType;// 图案类别
 	@Column(name = "PICCODE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
@@ -79,5 +56,100 @@ public class Indent extends StringIdPo {
 	@Column(name = "RECEIVERMOBILE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String receiverMobile;
 
+	public String getPicType() {
+		return picType;
+	}
+
+	public void setPicType(String picType) {
+		this.picType = picType;
+	}
+
+	public String getPicCode() {
+		return picCode;
+	}
+
+	public void setPicCode(String picCode) {
+		this.picCode = picCode;
+	}
+
+	public String getWordContent() {
+		return wordContent;
+	}
+
+	public void setWordContent(String wordContent) {
+		this.wordContent = wordContent;
+	}
+
+	public String getWordSize() {
+		return wordSize;
+	}
+
+	public void setWordSize(String wordSize) {
+		this.wordSize = wordSize;
+	}
+
+	public String getWordFont() {
+		return wordFont;
+	}
+
+	public void setWordFont(String wordFont) {
+		this.wordFont = wordFont;
+	}
+
+	public String getAlignType() {
+		return alignType;
+	}
+
+	public void setAlignType(String alignType) {
+		this.alignType = alignType;
+	}
+
+	public double getWordLeanSize() {
+		return wordLeanSize;
+	}
+
+	public void setWordLeanSize(double wordLeanSize) {
+		this.wordLeanSize = wordLeanSize;
+	}
+
+	public String getPicCount() {
+		return picCount;
+	}
+
+	public void setPicCount(String picCount) {
+		this.picCount = picCount;
+	}
+
+	public double getSpaceSize() {
+		return spaceSize;
+	}
+
+	public void setSpaceSize(double spaceSize) {
+		this.spaceSize = spaceSize;
+	}
+
+	public String getIndentId() {
+		return indentId;
+	}
+
+	public void setIndentId(String indentId) {
+		this.indentId = indentId;
+	}
+
+	public String getReceiverName() {
+		return receiverName;
+	}
+
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
+	}
+
+	public String getReceiverMobile() {
+		return receiverMobile;
+	}
+
+	public void setReceiverMobile(String receiverMobile) {
+		this.receiverMobile = receiverMobile;
+	}
 
 }
