@@ -5,6 +5,8 @@ package com.huitian.chat;
  *
  */
 public class ChatMessage {
+	private String indentList;
+	private String indentDto;//传送的加工顶大
 private String timeTag;//时间串
 private String indentId;// 订单ID。有些消息与订单相关
 private String messageMode;// 信息模式： 紧急通知，普通通知，新订单，订单状态，聊天
@@ -18,8 +20,22 @@ private String suffix;// 二进制文件后缀，如txt,acc,jpg,png,gif等
 private String uuid;//文件名字
 private String binaryAddress;// 二进制文件的存储位置。上传之后，将文件存储在指定的位置，然后将binary清空
 private String binaryBase64;//图片的base64字符串
+
+public String getIndentDto() {
+	return indentDto;
+}
+public void setIndentDto(String indentDto) {
+	this.indentDto = indentDto;
+}
 public String getTimeTag() {
 	return timeTag;
+}
+
+public String getIndentList() {
+	return indentList;
+}
+public void setIndentList(String indentList) {
+	this.indentList = indentList;
 }
 public void setTimeTag(String timeTag) {
 	this.timeTag = timeTag;

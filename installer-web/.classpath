@@ -28,11 +28,5 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Zlyj/.m2/repository/json_jar_lib/commons-beanutils-1.8.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Zlyj/.m2/repository/json_jar_lib/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Zlyj/.m2/repository/json_jar_lib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Zlyj/.m2/repository/json_jar_lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Zlyj/.m2/repository/json_jar_lib/ezmorph-1.0.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Zlyj/.m2/repository/json_jar_lib/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

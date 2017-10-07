@@ -8,6 +8,7 @@ package com.huitian.constants;
  *
  */
 public enum EnumMessageMode{
+	CENTER_ALLINDENT("获取一个城市加工店所有的订单"),
     HEART_BREAK("心跳"),
   START_MACHINE("开始加工获取订单"),
   STOP_MACHINE("停止接收订单"),
@@ -16,6 +17,7 @@ public enum EnumMessageMode{
   WECHAT_PUSH_INDENT("微信推送订单"),
   NO_INDENT("没订单"),
   HAVE_INDENT("有订单"),
+  CENTER_QUEUE_ALLINDENT("加工中心所有的订单返回")
 	;
 
 	private String text;

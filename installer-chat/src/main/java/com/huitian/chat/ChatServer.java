@@ -7,7 +7,8 @@ import com.huitian.constants.EnumMessageMode;
 import com.huitian.constants.EnumMessageType;
 import com.huitian.context.SpringContextHolder;
 import com.huitian.po.account.CenterAccount;
-import com.huitian.po.indent.IndentParam;
+import com.huitian.po.indent.IndentDto;
+import com.huitian.po.indent.IndentDto;
 import com.huitian.util.json.JacksonHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -42,7 +43,7 @@ public class ChatServer {
     /**
      * 排队。 queue.isEmpty() offer poll
      */
-    private static ConcurrentHashMap<String, ConcurrentLinkedQueue<IndentParam>> centerAccountIdToQueue = new ConcurrentHashMap<String, ConcurrentLinkedQueue<IndentParam>>();
+    private static ConcurrentHashMap<String, ConcurrentLinkedQueue<IndentDto>> centerAccountIdToQueue = new ConcurrentHashMap<String, ConcurrentLinkedQueue<IndentDto>>();
     /**
      * token验证
      **/
@@ -108,12 +109,12 @@ public class ChatServer {
 
     private boolean addChatUserToHashMap(String centerAccountId, ChatServer chatServer) {
         try {
-            ConcurrentLinkedQueue<IndentParam> queue = null;
+            ConcurrentLinkedQueue<IndentDto> queue = null;
             centerAccountIdToChatServer.put(centerAccountId, chatServer);
             if (centerAccountIdToQueue.containsKey(centerAccountId)) {
                 queue = centerAccountIdToQueue.get(centerAccountId);
             } else {
-                queue = new ConcurrentLinkedQueue<IndentParam>();
+                queue = new ConcurrentLinkedQueue<IndentDto>();
             }
             centerAccountIdToQueue.put(centerAccountId, queue);
             return true;
@@ -298,8 +299,9 @@ public class ChatServer {
 
             try {
                 String centerAccountId = chatMessage.getMessage();
-                IndentParam indent = null;
-                ConcurrentLinkedQueue<IndentParam> indentQueue = centerAccountIdToQueue.get(centerAccountId);
+                
+                IndentDto indent = null;
+                ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
                 if(indentQueue!=null){
                 	indentQueue.offer(indent);
                     centerAccountIdToQueue.put(centerAccountId, indentQueue);// 更新队列	
@@ -310,8 +312,8 @@ public class ChatServer {
         } else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.START_MACHINE.name())) {
             try {
                 String centerAccountId = chatMessage.getMessage();
-                ConcurrentLinkedQueue<IndentParam> indentQueue = centerAccountIdToQueue.get(centerAccountId);
-                IndentParam indent = indentQueue.poll();
+           ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
+                IndentDto indent = indentQueue.poll();
            
                 ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
                 String message = createChatMessage(indent);
@@ -329,9 +331,25 @@ public class ChatServer {
         } else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.WECHAT_PUSH_INDENT.name())) {
 
         }
+        //加工中心队列有多少订单
+        else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.CENTER_ALLINDENT.name())) {
+        	if(StringUtils.isNotBlank(chatMessage.getMessage())) {
+        		try {
+        			String centerAccountId = chatMessage.getMessage();
+                    ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
+                    
+                    String json = JacksonHelper.toJson(indentQueue);
+                    createChatMessage(EnumMessageMode.CENTER_QUEUE_ALLINDENT.name(), centerAccountId,json);
+                    ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
+                    chatServer.sendMessage(json);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+          	}        	   
+        }
     }
 
-    private String  createChatMessage(IndentParam indent) {
+    private String  createChatMessage(IndentDto indent) {
 		// TODO Auto-generated method stub
       
         Gson gson =new Gson ();
@@ -348,8 +366,9 @@ public class ChatServer {
 		return json;
 	}
 
-	private ChatMessage createChatMessage(String MessageMode, String centerAccountId) {
+	private ChatMessage createChatMessage(String MessageMode, String centerAccountId,String indentList) {
         ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setIndentList(indentList);
         chatMessage.setMessageMode(MessageMode);
         chatMessage.setMessage(centerAccountId);
         return chatMessage;
