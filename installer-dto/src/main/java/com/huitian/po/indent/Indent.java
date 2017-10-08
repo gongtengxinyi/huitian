@@ -65,7 +65,7 @@ public class Indent extends StringIdPo {
 	@Column(name = "WORDFONT", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String wordFont;
 	@Column(name = "ALIGNTYPE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
-	private String alignType;// alignType
+	private String alignType;// alignType对齐方式（枚举）
 	@Column(name = "WORDLEANSIZE", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
 	private double wordLeanSize;// 倾斜度
 	@Column(name = "PICCOUNT", columnDefinition = "INT DEFAULT 1")
