@@ -296,16 +296,19 @@ public class ChatServer {
     private void parseChatMessage(ChatMessage chatMessage) {
         Gson gson = new Gson();
         if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.APP_PUSH_INDENT.name())) {
-
+        	  IndentDto indent = null;
             try {
                 String centerAccountId = chatMessage.getMessage();
-                
-                IndentDto indent = null;
+                if(StringUtils.isNotBlank(chatMessage.getIndentDto())){
+                	indent=  JacksonHelper.toObject(    chatMessage.getIndentDto(),IndentDto.class);
+                }
+              
                 ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
                 if(indentQueue!=null){
                 	indentQueue.offer(indent);
                     centerAccountIdToQueue.put(centerAccountId, indentQueue);// 更新队列	
-                }                
+                }
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }

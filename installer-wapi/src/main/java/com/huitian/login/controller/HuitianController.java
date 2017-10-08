@@ -1,25 +1,34 @@
 package com.huitian.login.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.huitian.api.account.service.CenterAccountService;
 import com.huitian.constants.HttpResponseStatus;
 import com.huitian.constants.HuitianResult;
 import com.huitian.dto.Filter;
 import com.huitian.po.account.CenterAccount;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import com.huitian.util.json.JacksonHelper;
 
 @Controller("loginController")
 @RequestMapping("/huitianterminal")
-public class LoginController {
-	private static Log logger = LogFactory.getLog(LoginController.class);
+public class HuitianController {
+	private static Log logger = LogFactory.getLog(HuitianController.class);
 	@Autowired
 	private CenterAccountService centerAccountService;
-
+	@RequestMapping("tabGetData")
+	@ResponseBody
+	public HuitianResult pcterminalLogin(@RequestBody String data) {
+	  Filter filter = JacksonHelper.toObject(data, Filter.class);
+	  
+		
+	}
 	/**
 	 * 修改密码
 	 *
