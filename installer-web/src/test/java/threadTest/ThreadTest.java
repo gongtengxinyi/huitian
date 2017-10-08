@@ -16,20 +16,20 @@ public class ThreadTest {
 	
 		   Runnable runnable = new Runnable() {
 	            public void run() {    
-	            	 String filename="F:\\test.txt";
-	            	AppendToFile.appendMethodA(filename, "YES      ");
+	            	 String filename="H:\\test.txt";
+	            	AppendToFile.appendMethodA(filename, "YES");
 	            }
 		   };
 	        ScheduledExecutorService service = Executors
 	                .newSingleThreadScheduledExecutor();
 	        // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间
-	        service.scheduleAtFixedRate(runnable, 1,3, TimeUnit.SECONDS);
+	        service.scheduleAtFixedRate(runnable, 1,10000, TimeUnit.SECONDS);
 	      
 	        
 			   Runnable runnable1 = new Runnable() {
 		            public void run() {    
-		           	 String filename="F:\\test.txt";
-		 	        ReadFromFile.readFileByChars(filename);
+		           	 String filename="H:\\test.txt";
+		 	        ReadFromFile.readFileByLines(filename);
 		            }
 			   };
 		        ScheduledExecutorService service1 = Executors
