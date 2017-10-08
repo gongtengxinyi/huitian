@@ -303,7 +303,8 @@ public class ChatServer {
                 if(indentQueue!=null){
                 	indentQueue.offer(indent);
                     centerAccountIdToQueue.put(centerAccountId, indentQueue);// 更新队列	
-                }                
+                }
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
