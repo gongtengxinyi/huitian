@@ -106,6 +106,8 @@ public class ChatServer {
 				return;
 			}
 			addChatUserToHashMap(centerAccountId, this);
+			//初始化时给他一个no，标记他登陆之后没有进行加工订单
+			centerAccountIdToIndentStatus.put(centerAccountId, "NO");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
