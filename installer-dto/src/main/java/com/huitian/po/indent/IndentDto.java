@@ -3,6 +3,7 @@ package com.huitian.po.indent;
 import javax.persistence.Column;
 
 public class IndentDto {
+	private String centerAccountId;
 	private String picType;// 图案类别
 	private String picCode;// 图案编码
 	private String wordContent;// 文字内容
@@ -15,6 +16,13 @@ public class IndentDto {
 	private String indentId;// 订单id
 	private String receiverName;
 	private String receiverMobile;
+	
+	public String getCenterAccountId() {
+		return centerAccountId;
+	}
+	public void setCenterAccountId(String centerAccountId) {
+		this.centerAccountId = centerAccountId;
+	}
 	public String getPicType() {
 		return picType;
 	}

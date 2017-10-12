@@ -16,6 +16,8 @@
       <artifactId>installer-impl</artifactId>
     </dependency>
     <!-- inner dependencies end -->
+<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+
 
     <!-- shared dependencies begin -->
     <dependency>
@@ -23,7 +25,18 @@
       <artifactId>shared-context</artifactId>
     </dependency>
     <!-- shared dependencies end -->
-
+    <dependency>  
+            <groupId>javax</groupId>  
+            <artifactId>javaee-api</artifactId>  
+            <version>7.0</version>  
+        </dependency>  
+  
+<dependency>
+    <groupId>javax.websocket</groupId>
+    <artifactId>javax.websocket-api</artifactId>
+    <version>1.0</version>
+    <scope>provided</scope>
+</dependency>
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-catalina</artifactId>
