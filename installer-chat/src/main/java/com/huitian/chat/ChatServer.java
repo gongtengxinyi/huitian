@@ -347,9 +347,10 @@ public class ChatServer {
 					ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
 
 					String json = JacksonHelper.toJson(indentQueue);
-					createChatMessage(EnumMessageMode.CENTER_QUEUE_ALLINDENT.name(), centerAccountId, json);
+					ChatMessage createChatMessage = createChatMessage(EnumMessageMode.CENTER_QUEUE_ALLINDENT.name(), centerAccountId, json);
 					ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
-					chatServer.sendMessage(json);
+					String indentJson = JacksonHelper.toJson(createChatMessage);
+					chatServer.sendMessage(indentJson);
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
@@ -366,6 +367,9 @@ public class ChatServer {
 	private void sendIndentToTerminal(String centerAccountId) {
 		// TODO Auto-generated method stub
 		ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
+		if(indentQueue==null) {
+			return ;
+		}
 		IndentDto indent = indentQueue.poll();
 		ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
 		String message = createChatMessage(indent);
