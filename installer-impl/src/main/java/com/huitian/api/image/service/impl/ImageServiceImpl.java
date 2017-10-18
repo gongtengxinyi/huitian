@@ -10,7 +10,7 @@ import com.huitian.po.image.Image;
 import com.huitian.repo.fw.dao.SqlDao;
 import com.huitian.repo.image.dao.ImageDao;
 
-@Service(IndentService.BEAN_NAME)
+@Service(ImageService.BEAN_NAME)
 public class ImageServiceImpl extends StringIdBaseServiceImpl<Image>implements ImageService {
 
 
