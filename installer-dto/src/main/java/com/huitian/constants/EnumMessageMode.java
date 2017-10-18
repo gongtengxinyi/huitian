@@ -4,7 +4,7 @@ package com.huitian.constants;
 
 /**
  * 即时通讯模式枚举
- * @author Zlyj-B
+ * @author Zlyj-Bd
  *
  */
 public enum EnumMessageMode{
