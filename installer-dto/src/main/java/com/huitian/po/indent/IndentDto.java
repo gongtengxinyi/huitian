@@ -1,7 +1,5 @@
 package com.huitian.po.indent;
 
-import javax.persistence.Column;
-
 public class IndentDto {
 	private double xLongToZero;//距离x轴距离1
 	private double yLongToZero;//距离y轴距离

@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.huitian.api.fw.service.impl.StringIdBaseServiceImpl;
-import com.huitian.api.indent.service.IndentService;
-import com.huitian.po.indent.Indent;
-import com.huitian.po.indent.IndentParam;
+import com.huitian.api.indent.service.IndentDtoService;
+import com.huitian.po.indent.IndentDto;
 import com.huitian.repo.fw.dao.SqlDao;
-import com.huitian.repo.indent.dao.IndentDao;
+import com.huitian.repo.indent.dao.IndentDtoDao;
 
-@Service(IndentService.BEAN_NAME)
-public class IndentServiceImpl extends StringIdBaseServiceImpl<Indent>implements IndentService {
+@Service(IndentDtoService.BEAN_NAME)
+public class IndentDtoServiceImpl extends StringIdBaseServiceImpl<IndentDto>implements IndentDtoService {
 
 	private static final String PUSH_TYPE = "pushType";
 
@@ -20,7 +19,7 @@ public class IndentServiceImpl extends StringIdBaseServiceImpl<Indent>implements
 
 
 	@Autowired
-	public void setBaseDao(IndentDao dao) {
+	public void setBaseDao(IndentDtoDao dao) {
 		super.setBaseDao(dao);
 	}
 }
