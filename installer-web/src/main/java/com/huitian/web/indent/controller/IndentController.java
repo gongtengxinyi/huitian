@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndentController  {
 
 	@RequestMapping(value = "demo")
-	@ResponseBody
 	public String AssociatedinformationGet(HttpServletRequest request) {
-		return "login";
+		return "indent/indentList1";
 	}
   
 }

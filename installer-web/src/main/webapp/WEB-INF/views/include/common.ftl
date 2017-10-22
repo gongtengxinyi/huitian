@@ -25,6 +25,7 @@
 <meta http-equiv="expires" content="0" />
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <link href="static/bootstrap/css/bootstrap.gzcss" rel="stylesheet">
+<link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" href="static/css/common.css" type="text/css" />
 <link rel="stylesheet" href="static/css/homepage.css" type="text/css" />
 <link rel="stylesheet" href="static/css/menu.css" type="text/css" />

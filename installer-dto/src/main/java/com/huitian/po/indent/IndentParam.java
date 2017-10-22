@@ -75,11 +75,57 @@ public class IndentParam extends StringIdPo {
 	@Column(name = "WORDLEANSIZE", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
 	private double wordLeanSize;// 倾斜度
 	@Column(name = "PICCOUNT", columnDefinition = "INT DEFAULT 1")
-	private String picCount;// picCount
+	private int picCount;// picCount
 	@Column(name = "SPACESIZE", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
 	private double spaceSize;// 图案间距
 	@Column(name = "INDENTID", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 	private String indentId;// 订单id
+	
+	
+//	private double xLongToZero;//距离x轴距离1
+//	private double yLongToZero;//距离y轴距离
+//	private double zSpin;//z轴旋转
+//	private double zoom;//放大倍数
+	
+	@Column(name = "XLONGTOZERO", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
+	private double xLongToZero;// 倾斜度
+	
+	
+	@Column(name = "YLONGTOZERO", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
+	private double yLongToZero;// 倾斜度
+	
+	@Column(name = "ZSPAN", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
+	private double zSpin;// 倾斜度
+	
+	@Column(name = "ZOOM", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
+	private double zoom;// 倾斜度
+	
+	
+	
+	public double getxLongToZero() {
+		return xLongToZero;
+	}
+	public void setxLongToZero(double xLongToZero) {
+		this.xLongToZero = xLongToZero;
+	}
+	public double getyLongToZero() {
+		return yLongToZero;
+	}
+	public void setyLongToZero(double yLongToZero) {
+		this.yLongToZero = yLongToZero;
+	}
+	public double getzSpin() {
+		return zSpin;
+	}
+	public void setzSpin(double zSpin) {
+		this.zSpin = zSpin;
+	}
+	public double getZoom() {
+		return zoom;
+	}
+	public void setZoom(double zoom) {
+		this.zoom = zoom;
+	}
 	public String getPicTypeId() {
 		return picTypeId;
 	}
@@ -188,10 +234,11 @@ public class IndentParam extends StringIdPo {
 	public void setWordLeanSize(double wordLeanSize) {
 		this.wordLeanSize = wordLeanSize;
 	}
-	public String getPicCount() {
+	
+	public int getPicCount() {
 		return picCount;
 	}
-	public void setPicCount(String picCount) {
+	public void setPicCount(int picCount) {
 		this.picCount = picCount;
 	}
 	public double getSpaceSize() {

@@ -38,6 +38,39 @@ public class Indent extends StringIdPo {
 	private String receiverName;
 	@Column(name = "RECEIVERMOBILE", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 	private String receiverMobile;
+	@Column(name = "ADDRESSDETAIL", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
+	private String addressDetail;
+	public String getIndentStatus() {
+		return indentStatus;
+	}
+	public void setIndentStatus(String indentStatus) {
+		this.indentStatus = indentStatus;
+	}
+	public String getPayStatus() {
+		return payStatus;
+	}
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+	public String getReceiverName() {
+		return receiverName;
+	}
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
+	}
+	public String getReceiverMobile() {
+		return receiverMobile;
+	}
+	public void setReceiverMobile(String receiverMobile) {
+		this.receiverMobile = receiverMobile;
+	}
+	public String getAddressDetail() {
+		return addressDetail;
+	}
+	public void setAddressDetail(String addressDetail) {
+		this.addressDetail = addressDetail;
+	}
+	
 
 
 }
