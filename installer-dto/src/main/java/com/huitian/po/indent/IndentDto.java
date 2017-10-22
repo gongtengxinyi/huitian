@@ -3,7 +3,12 @@ package com.huitian.po.indent;
 import javax.persistence.Column;
 
 public class IndentDto {
+	private double xLongToZero;//距离x轴距离1
+	private double yLongToZero;//距离y轴距离
+	private double zSpin;//z轴旋转
+	private double zoom;//放大倍数
 	private String centerAccountId;
+	private String picName;//图片dxf名字
 	private String picType;// 图案类别
 	private String picCode;// 图案编码
 	private String wordContent;// 文字内容
@@ -17,6 +22,36 @@ public class IndentDto {
 	private String receiverName;
 	private String receiverMobile;
 	
+	public String getPicName() {
+		return picName;
+	}
+	public void setPicName(String picName) {
+		this.picName = picName;
+	}
+	public double getxLongToZero() {
+		return xLongToZero;
+	}
+	public void setxLongToZero(double xLongToZero) {
+		this.xLongToZero = xLongToZero;
+	}
+	public double getyLongToZero() {
+		return yLongToZero;
+	}
+	public void setyLongToZero(double yLongToZero) {
+		this.yLongToZero = yLongToZero;
+	}
+	public double getzSpin() {
+		return zSpin;
+	}
+	public void setzSpin(double zSpin) {
+		this.zSpin = zSpin;
+	}
+	public double getZoom() {
+		return zoom;
+	}
+	public void setZoom(double zoom) {
+		this.zoom = zoom;
+	}
 	public String getCenterAccountId() {
 		return centerAccountId;
 	}
