@@ -106,12 +106,34 @@ public class ChatServer {
 				return;
 			}
 			addChatUserToHashMap(centerAccountId, this);
-			//初始化时给他一个no，标记他登陆之后没有进行加工订单
-			centerAccountIdToIndentStatus.put(centerAccountId, "NO");
+			// 初始化时给他一个no，标记他登陆之后没有进行加工订单
+			if (!StringUtils.equals("YES", centerAccount.getSystemPush())) {
+				centerAccountIdToIndentStatus.put(centerAccountId, "NO");
+				checkIfHaveIndent();
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 检查有没有需要加工的订单
+	 */
+	private void checkIfHaveIndent() {
+		ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
+		if (indentQueue == null) {
+			return;
+		}
+		IndentDto indent = indentQueue.poll();
+		if (indent == null) {
+			return;
+		}
+		ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
+		String message = createChatMessage(indent);
+		chatServer.sendMessage(message);
+		centerAccountIdToQueue.put(centerAccountId, indentQueue);// 更新队列
+		centerAccountIdToIndentStatus.put(centerAccountId, "YES");
 	}
 
 	private boolean addChatUserToHashMap(String centerAccountId, ChatServer chatServer) {
@@ -311,6 +333,7 @@ public class ChatServer {
 				if (StringUtils.isNotBlank(chatMessage.getIndentDto())) {
 					indent = JacksonHelper.toObject(chatMessage.getIndentDto(), IndentDto.class);
 				}
+				createQueue(centerAccountId);
 				ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
 				if (indentQueue != null) {
 					indentQueue.offer(indent);
@@ -327,6 +350,12 @@ public class ChatServer {
 			try {
 				String centerAccountId = chatMessage.getMessage();
 				sendIndentToTerminal(centerAccountId);
+			} catch (Exception e) {
+			}
+		} else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.GET_MORE.name())) {
+			try {
+				String centerAccountId = chatMessage.getMessage();
+				sendIndentToTerminalForGetMore(centerAccountId);
 			} catch (Exception e) {
 			}
 		} else if (StringUtils.equals(chatMessage.getMessageMode(), EnumMessageMode.HEART_BREAK.name())) {
@@ -347,7 +376,8 @@ public class ChatServer {
 					ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
 
 					String json = JacksonHelper.toJson(indentQueue);
-					ChatMessage createChatMessage = createChatMessage(EnumMessageMode.CENTER_QUEUE_ALLINDENT.name(), centerAccountId, json);
+					ChatMessage createChatMessage = createChatMessage(EnumMessageMode.CENTER_QUEUE_ALLINDENT.name(),
+							centerAccountId, json);
 					ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
 					String indentJson = JacksonHelper.toJson(createChatMessage);
 					chatServer.sendMessage(indentJson);
@@ -358,6 +388,30 @@ public class ChatServer {
 		}
 	}
 
+	/*
+	 * 
+	 * 在获取一个
+	 */
+	private void sendIndentToTerminalForGetMore(String centerAccountId2) {
+
+		sendToTerminal(centerAccountId);
+	}
+
+	/**
+	 * 创建等待队列
+	 * 
+	 * @param centerAccountId
+	 */
+	private void createQueue(String centerAccountId) {
+		ConcurrentLinkedQueue<IndentDto> queue = null;
+		if (centerAccountIdToQueue.containsKey(centerAccountId)) {
+			queue = centerAccountIdToQueue.get(centerAccountId);
+		} else {
+			queue = new ConcurrentLinkedQueue<IndentDto>();
+		}
+		centerAccountIdToQueue.put(centerAccountId, queue);
+	}
+
 	/**
 	 * 通知终端进行加工
 	 * 
@@ -365,12 +419,33 @@ public class ChatServer {
 	 */
 
 	private void sendIndentToTerminal(String centerAccountId) {
+		String status = centerAccountIdToIndentStatus.get(centerAccountId);
+		if (StringUtils.equals("YES", status)) {
+			return;
+		}
+		sendToTerminal(centerAccountId);
+	}
+
+	/**
+	 * 发送到终端
+	 * 
+	 * @param centerAccountId
+	 */
+	private void sendToTerminal(String centerAccountId) {
+		// TODO Auto-generated method stub
+		// 判断chat是否在线
+		if (!centerAccountIdToChatServer.containsKey(centerAccountId)) {
+			return;
+		}
 		// TODO Auto-generated method stub
 		ConcurrentLinkedQueue<IndentDto> indentQueue = centerAccountIdToQueue.get(centerAccountId);
-		if(indentQueue==null) {
-			return ;
+		if (indentQueue == null) {
+			return;
 		}
 		IndentDto indent = indentQueue.poll();
+		if (indent == null) {
+			return;
+		}
 		ChatServer chatServer = centerAccountIdToChatServer.get(centerAccountId);
 		String message = createChatMessage(indent);
 		chatServer.sendMessage(message);
@@ -383,7 +458,6 @@ public class ChatServer {
 	}
 
 	private String createChatMessage(IndentDto indent) {
-		// TODO Auto-generated method stub
 
 		Gson gson = new Gson();
 		ChatMessage chatMessage = new ChatMessage();

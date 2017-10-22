@@ -42,4 +42,12 @@ public class CenterAccount extends StringIdPo {
 		this.password = password;
 	}
 
+	public String getSystemPush() {
+		return systemPush;
+	}
+
+	public void setSystemPush(String systemPush) {
+		this.systemPush = systemPush;
+	}
+
 }

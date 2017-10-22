@@ -4,10 +4,11 @@ package com.huitian.constants;
 
 /**
  * 即时通讯模式枚举
- * @author Zlyj-B
+ * @author Zlyj-Bd
  *
  */
 public enum EnumMessageMode{
+	GET_MORE("在获取一个订单"),
 	CENTER_ALLINDENT("获取一个城市加工店所有的订单"),
     HEART_BREAK("心跳"),
   START_MACHINE("开始加工获取订单"),

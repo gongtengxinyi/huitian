@@ -11,10 +11,22 @@ import com.huitian.po.base.StringIdPo;
 public class Center extends StringIdPo {
 	@Column(name = "CITY_NAME", length = 32, columnDefinition = "VARCHAR(32) DEFAULT ''")
 	private String cityname;// 城市名字
+	
+	@Column(name = "RESPOSITY", length = 32, columnDefinition = "VARCHAR(32) DEFAULT ''")
+	private int  repository;//库存
+	
 	@Column(name = "CITY_ID", length = 50, columnDefinition = "VARCHAR(50) DEFAULT ''")
 	private String cityId;// 城市id
 	@Column(name = "NAME1", length = 50, columnDefinition = "VARCHAR(50) DEFAULT ''")
 	private String name1;// 名称
+	
+	
+	public int getRepository() {
+		return repository;
+	}
+	public void setRepository(int repository) {
+		this.repository = repository;
+	}
 	public String getCityname() {
 		return cityname;
 	}
