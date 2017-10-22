@@ -40,6 +40,8 @@ public class Indent extends StringIdPo {
 	private String receiverMobile;
 	@Column(name = "ADDRESSDETAIL", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 	private String addressDetail;
+	
+	
 	public String getIndentStatus() {
 		return indentStatus;
 	}
@@ -70,7 +72,8 @@ public class Indent extends StringIdPo {
 	public void setAddressDetail(String addressDetail) {
 		this.addressDetail = addressDetail;
 	}
-	
 
+
+	
 
 }

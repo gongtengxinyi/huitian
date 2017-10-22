@@ -10,10 +10,15 @@ import com.huitian.po.base.StringIdPo;
 public class Account extends StringIdPo{
 	@Column(name = "NAME", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 	private String name;
+	@Column(name = "MOBILE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String mobile;
+	@Column(name = "ADDRESS", length = 125, columnDefinition = "VARCHAR(125) DEFAULT ''")
 	private String address;
+	@Column(name = "SEX", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String sex;
+	@Column(name = "AGE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String age;
+	@Column(name = "COUNT", columnDefinition = "INT DEFAULT 0")
 	private int count;//所有订单数量
 	public String getName() {
 		return name;

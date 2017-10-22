@@ -1,15 +1,26 @@
 package com.huitian.po.indent;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import com.huitian.po.base.StringIdPo;
-
+@Entity
+@Table(name = "HT_WORDBLANK")
 public class Wordblank extends StringIdPo{
-
+@Column(name = "WORDBLANKTYPEID", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 private String wordblankTypeId;
+@Column(name = "LENGTH", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
 private double length;
+@Column(name = "WIDTH", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
 private double width;
+@Column(name = "HEIGHT", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
 private double height;
+@Column(name = "PRICE", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
 private double price;
+@Column(name = "FROM", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 private String from;//Huoyuan
+@Column(name = "USE", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 private String use;
 public String getWordblankTypeId() {
 	return wordblankTypeId;

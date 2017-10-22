@@ -2,15 +2,12 @@
 <title>订单管理查询</title>
 <#include "/include/common-list.ftl" /> <#include
 "/include/common-cityselect2.ftl" />
-
-
-
 <script src="static/bootstrap/bootstrap.min.js"></script>
 
-<script src="static/scripts/indent/indentList1.js?randomId=<%=Math.random()%>"></script>
+<script src="static/scripts/indent/indentList.js?randomId=<%=Math.random()%>"></script>
 </head>
 <body
-	ng-init="itemId='${itemId}'; mark='${mark}';noScrab='${noScrab}'; status='${status}';progress='${progress}';ifLeft='${ifLeft}'">
+	ng-init="status='  ${status}';progress='${progress}';">
 	<#include "/include/body-begin.ftl" />
 	<div ng-controller="IndentListController">
 		<p>
@@ -30,31 +27,14 @@
 		<div class="panel panel-default form-horizontal" id="content"
 			style="display: yes;">
 			<div class="panel-heading">订单管理查询</div>
-			<input type="hidden" id="pageNo" value="${pageNo}"
-				ng-init="pageNo='${pageNo}'"> <input type="hidden"
-				id="sf.isAPI" ng-model="sf.isAPI" value="${sf.isAPI}"
-				ng-init="sf.isAPI='${sf.isAPI}'">
-			<!-- 用于存储点击页面顶部未抢单按钮时的查询条件 -->
-			<input type="hidden" id="sf.ifLeft" ng-model="sf.ifLeft"
-				value="${sf.ifLeft}" ng-init="sf.ifLeft='${sf.ifLeft}'">
-			<!-- 用于存储点击页面顶部未抢单按钮时的查询条件 -->
-			<input type="hidden" id="sf.overTime" ng-model="sf.overTime"
-				value="${sf.overTime}" ng-init="sf.overTime='${sf.overTime}'">
-			<!-- 用于存储点击页面顶部超时响应时的查询条件 -->
-			<input type="hidden" id="sf.exceptionType"
-				ng-model="sf.exceptionType" value="${sf.exceptionType}"
-				ng-init="sf.exceptionType='${sf.exceptionType}'">
-			<!-- 用于存储点击页面顶部未抢单按钮时的查询条件 -->
       <input type="hidden" id="sf.workerContact" ng-model="sf.workerContact"
         value="${sf.workerContact}" ng-init="sf.workerContact='${sf.workerContact}'">
-			<!-- 用于存储点击页面顶部超时响应时的查询条件 -->
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-6 col-lg-3">
 						<div class="form-group">
 							<label class="control-label text-nowrap col-md-4">甲方名称</label>
-							<div class="col-md-8">
-								<!-- ng-model="sf.aparty.name1" ng-keyup="autoQuery($event)" ng-init="sf.aparty.name1='${data.apartyIdDisp}'"> -->
+							<div class="col-md-8">			
 								<input type="text" class="form-control" id="apartyIdDisp"
 									ng-model="sf.aparty.name1" ng-keyup="autoQuery($event)"
 									ng-init="sf.aparty.name1='${sf.aparty.name1}'">
@@ -176,123 +156,18 @@
 							</div>
 						</div>
 					</div>
-					<!-- comitDate end -->
-
-					<!-- gotDate begin -->
-					<div class="col-md-6">
-						<div class="row">
-							<label class="control-label text-nowrap col-md-4 col-lg-2">项目周期</label>
-							<div class="col-md-8 col-lg-10">
-								<div class="row">
-									<div class="col-md-6">
-										<p class="input-group">
-											<input type="text" class="form-control"
-												ng-keyup="autoQuery($event)" uib-datepicker-popup
-												ng-model="sf.gotDateBegin"
-												ng-init="sf.gotDateBegin='${sf.gotDateBegin}'"
-												is-open="gotDateBegin.opened"
-												datepicker-options="dateOptions" ng-required="true" /> <span
-												class="input-group-btn">
-												<button type="button" class="btn btn-default"
-													ng-click="openGotDateBegin()">
-													<i class="glyphicon glyphicon-calendar"></i>
-												</button>
-											</span>
-										</p>
-									</div>
-									<div class="col-md-6">
-										<p class="input-group">
-											<input type="text" class="form-control"
-												ng-keyup="autoQuery($event)" uib-datepicker-popup
-												ng-model="sf.gotDateEnd"
-												ng-init="sf.gotDateEnd='${sf.gotDateEnd}'"
-												is-open="gotDateEnd.opened" datepicker-options="dateOptions"
-												ng-required="true" /> <span class="input-group-btn">
-												<button type="button" class="btn btn-default"
-													ng-click="openGotDateEnd()">
-													<i class="glyphicon glyphicon-calendar"></i>
-												</button>
-											</span>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- gotDate end -->
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-lg-3">
-						<#if status=='EXCEPTION' || status=='NORMAL'>
 						<!--  如果是在页面上方点击的异常订单，那么就不ng-init -->
 						<div class="form-group">
 							<label class="control-label text-nowrap col-md-4">订单状态</label>
 							<div class="col-md-8">
 								<select id="sel" class="form-control" ng-change="query()"
-									ng-model="sf.status"> <#list indentStatusList as item>
-									<option value="${item.value}"<#if
-										item.value=='${sf.status}'>selected="true"</#if> >${item.text}</option>
-									</#list>
+									ng-model="sf.status">
+									<option value="ding"selected="true" >1</option>
 								</select>
 							</div>
-						</div>
-					</div>
-					<#else>
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">订单状态</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.status='${sf.status}'" ng-model="sf.status">
-								<#list indentStatusList as item>
-								<option value="${item.value}"<#if
-									item.value=='${sf.status}'>selected="true"</#if> >${item.text}</option>
-								</#list>
-							</select>
-						</div>
-					</div>
-				</div>
-				</#if>
-				<div class="col-md-6 col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">执行状态</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.executeStatus='${sf.executeStatus}'"
-								ng-model="sf.executeStatus"> <#list
-								indentExecuteStatusList as item>
-								<option value="${item.value}"<#if
-									item.value=='${sf.executeStatus}'>selected="true"</#if>
-									>${item.text}</option> </#list>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">服务类型</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-model="sf.serveType"
-								ng-change="query()" ng-init="sf.serveType='${sf.serveType}'">
-								<#list serveTypelist as item>
-								<option value="${item.code1}"<#if
-									item.code1=='${sf.serveType}'>selected="true"</#if>
-									>${item.name1}</option> </#list>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">订单类别</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.indentType='${sf.indentType}'"
-								ng-model="sf.indentType"> <#list indentTypeList as
-								item>
-								<option value="${item.value}"<#if
-									item.value=='${sf.indentType}'>selected="true"</#if>
-									>${item.text}</option> </#list>
-							</select>
 						</div>
 					</div>
 				</div>
@@ -341,215 +216,9 @@
 						</div>
 					</div>
 				</div>
-				<!-- releaseDate end -->
-				<div class="col-md-6 ">
-					<div class="row">
-						<div class="col-md-6 col-lg-6">
-							<div class="form-group">
-								<label class="control-label text-nowrap col-md-4">测试订单</label>
-								<div class="col-md-8 ">
-									<input type="checkbox" name="testIndent" id="testIndent"
-										ng-model="sf.remarks" ng-init="sf.remarks='${sf.remarks}'">
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 col-lg-6">
-							<div class="form-group">
-								<label class="control-label text-nowrap col-md-4">订单ID</label>
-								<div class="col-md-8 ">
-									<input type="text" class="form-control" ng-model="sf.code1"
-										ng-keyup="autoQuery($event)" ng-init="sf.code1='${sf.code1}'">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-md-6 col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">异常状态</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.excepStatus='${sf.excepStatus}'"
-								ng-model="sf.excepStatus"> <#list indentExcepStatusList
-								as item>
-								<option value="${item.value}"<#if
-									item.value=='${sf.excepStatus}'>selected="true"</#if>
-									>${item.text}</option> </#list>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">评价状态</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.evaluateStatus='${sf.evaluateStatus}'"
-								ng-model="sf.evaluateStatus"> <#list
-								indentEvaluateStatusList as item>
-								<option value="${item.value}"<#if
-									item.value=='${sf.evaluateStatus}'>selected="true"</#if>
-									>${item.text}</option> </#list>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">上门次数</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.source='${sf.source}'" ng-model="sf.source">
-								<#list sourceList as item>
-								<option value="${item.value}"<#if
-									item.value=='${sf.source}'>selected="true"</#if> >${item.text}</option>
-								</#list>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">操作进度</label>
-						<#if progress=='INVITEEVAL'>
-						<!--  如果是在页面上方点击的待离开订单，那么就不ng-init -->
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								"
-                  ng-model="sf.progress"> <#list
-								scnodeList as item>
-								<option value="${item.code1}"<#if
-									item.value=='${sf.progress}'>selected="true"</#if>
-									>${item.name1}</option> </#list>
-							</select>
-						</div>
-						<#else>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.progress='${sf.progress}'" ng-model="sf.progress">
-								<#list scnodeList as item>
-								<option value="${item.code1}"<#if
-									item.value=='${sf.progress}'>selected="true"</#if>
-									>${item.name1}</option> </#list>
-							</select>
-						</div>
-						</#if>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-        <div class="col-md-3"col-lg-3">
-          <div class="form-group">
-            <label class="control-label text-nowrap col-md-4">业主地址</label>
-            <div class="col-md-8">
-              <input type="text" class="form-control"
-                  ng-model="sf.contact.detailAddr1" ng-keyup="autoQuery($event)"
-                  ng-init="sf.contact.detailAddr1='${sf.contact.detailAddr1}'">
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3"col-lg-3">
-          <div class="form-group">
-            <label class="control-label text-nowrap col-md-4">发布状态</label>
-            <div class="col-md-8">
-              <select id="sel" class="form-control" ng-change="query()"
-                ng-init="sf.releaseStatus='${sf.releaseStatus}'"
-                ng-model="sf.releaseStatus"> <#list
-                indentPushStatusList as item>
-                <option value="${item.value}"<#if
-                  item.value=='${sf.releaseStatus}'>selected="true"</#if>
-                  >${item.text}</option> </#list>
-              </select>
-            </div>
-          </div>
-        </div>
-        
-          <div class="col-md-6"col-lg-3">
-          <div class="form-group" cityselect2>
-            <label class="control-label text-nowrap col-md-4 col-lg-2">服务地区</label>
-            <div class="col-md-8 col-lg-10">
-              <div class="row">
-                <div class="col-md-4">
-                  <select class="form-control" name="regionProv"
-                    ng-change="query()" ng-init="sf.regionProv='${sf.regionProv}'"
-                    ng-model="sf.regionProv"
-                    ng-options="prov.v as prov.n for prov in provs">
-                  </select>
-                </div>
-                <div class="col-md-4" ng-hide="!cities">
-                  <select class="form-control" name="regionCity"
-                    ng-change="query()" ng-init="sf.regionCity='${sf.regionCity}'"
-                    ng-model="sf.regionCity"
-                    ng-options="city.v as city.n for city in cities">
-                  </select>
-                </div>
-                <div class="col-md-4" ng-hide="!dists">
-                  <select class="form-control" name="regionDist"
-                    ng-change="query()" ng-model="sf.regionDist"
-                    ng-init="sf.regionDist='${sf.regionDist}'"
-                    ng-options="dist.v as dist.n for dist in dists">
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        </div>
 		 	<div class="row">
-		<!--		<div class="col-md-3"col-lg-3">
-					<div class="form-group">
-						<label class="control-label text-nowrap col-md-4">发布状态</label>
-						<div class="col-md-8">
-							<select id="sel" class="form-control" ng-change="query()"
-								ng-init="sf.releaseStatus='${sf.releaseStatus}'"
-								ng-model="sf.releaseStatus"> <#list
-								indentPushStatusList as item>
-								<option value="${item.value}"<#if
-									item.value=='${sf.releaseStatus}'>selected="true"</#if>
-									>${item.text}</option> </#list>
-							</select>
-						</div>
-					</div>
 
-
-				</div>
-				<div class="col-md-9"col-lg-3">
-					<div class="form-group" cityselect2>
-						<label class="control-label text-nowrap col-md-4 col-lg-2">服务地区</label>
-						<div class="col-md-8 col-lg-10">
-							<div class="row">
-								<div class="col-md-4">
-									<select class="form-control" name="regionProv"
-										ng-change="query()" ng-init="sf.regionProv='${sf.regionProv}'"
-										ng-model="sf.regionProv"
-										ng-options="prov.v as prov.n for prov in provs">
-									</select>
-								</div>
-								<div class="col-md-4" ng-hide="!cities">
-									<select class="form-control" name="regionCity"
-										ng-change="query()" ng-init="sf.regionCity='${sf.regionCity}'"
-										ng-model="sf.regionCity"
-										ng-options="city.v as city.n for city in cities">
-									</select>
-								</div>
-								<div class="col-md-4" ng-hide="!dists">
-									<select class="form-control" name="regionDist"
-										ng-change="query()" ng-model="sf.regionDist"
-										ng-init="sf.regionDist='${sf.regionDist}'"
-										ng-options="dist.v as dist.n for dist in dists">
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> -->
-
-       
-         
 				<div>
 					<div class="col-md-3 pull-left">
 						<button id="release" class="btn btn-warning" ng-show="release"
@@ -566,11 +235,6 @@
 							ng-click="query()">
 							<span class="glyphicon glyphicon-search"></span>&nbsp;筛选
 						</button>
-
-						<!-- <button id="export" class="btn btn-info pull-right"
-							ng-click="exportExcel()">
-							<span class="glyphicon glyphicon-search"></span>&nbsp;导出
-						</button> -->
 					</div>
 				</div>
 			
@@ -596,8 +260,6 @@
 					<th>执行状态</th>
 					<th>订单状态</th>
 					<th>接单日期</th>
-				<!-- 	<th>联系日期</th>
-					<th>上门日期</th> -->
 					<th>签到日期</th>
 					<th>工匠金额</th>
 					<th>经理人金额</th>
@@ -657,13 +319,11 @@
 
 								<li><span><a class="glyphicon glyphicon-eye-open" ng-if="data.hasAuth == 'YES'"
 										href="indentAction/indentActionList.do?id={{data.id}}&&pageNo={{pager.currentPage}}">&nbsp;操作明细</a></span></li>
-								<li><!-- <span><a class="glyphicon glyphicon-eye-open" ng-if="data.hasAuth == 'YES'"
-                    href="indentWorkerContact/indentWorkerContactList.do?indentId={{data.id}}&&pageNo={{pager.currentPage}}">&nbsp;查看信息沟通</a></span> -->
-                    <span><a class="glyphicon glyphicon-eye-open" ng-if="data.hasAuth == 'YES'"
-                    href="indentExc/indentExcList.do?indentId={{data.id}}&&pageNo={{pager.currentPage}}">&nbsp;查看异常</a></span></li>
-								<!-- <li><span><a 
+								<li><span><a class="glyphicon glyphicon-eye-open" ng-if="data.hasAuth == 'YES'"
+                    href="indentWorkerContact/indentWorkerContactList.do?indentId={{data.id}}&&pageNo={{pager.currentPage}}">&nbsp;查看信息沟通</a></span></li>
+								<li><span><a 
                     class="glyphicon glyphicon-eye-open" ng-if="data.hasAuth == 'YES'"
-                    href="indentGps/indentGpsList.do?id={{data.id}}&&pageNo={{pager.currentPage}}">&nbsp;查看定位</a></span></li> -->
+                    href="indentGps/indentGpsList.do?id={{data.id}}&&pageNo={{pager.currentPage}}">&nbsp;查看定位</a></span></li>
 								
 
 

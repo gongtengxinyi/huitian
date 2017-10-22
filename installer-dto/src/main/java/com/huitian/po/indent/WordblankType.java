@@ -1,9 +1,16 @@
 package com.huitian.po.indent;
 
-import com.huitian.po.base.StringIdPo;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+import com.huitian.po.base.StringIdPo;
+@Entity
+@Table(name = "HT_WORDBLANKTYPE")
 public class WordblankType extends StringIdPo{
+@Column(name = "WORDBLANKNAME", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 private String wordblankName;
+@Column(name = "WORDBLANKCODE", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 private String wordblankCode;
 public String getWordblankName() {
 	return wordblankName;

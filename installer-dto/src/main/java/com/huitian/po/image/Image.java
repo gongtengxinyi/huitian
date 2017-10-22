@@ -1,5 +1,6 @@
 package com.huitian.po.image;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -7,10 +8,15 @@ import com.huitian.po.base.StringIdPo;
 @Entity
 @Table(name = "HT_IMAGE")
 public class Image extends StringIdPo{
+	@Column(name = "IMAGETYPEID", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String imageTypeId;//图形类别id
+	@Column(name = "PICTYPE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String picType;// 图案类别
+	@Column(name = "PICCODE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String picCode;// 图案编码
+	@Column(name = "IMGNAME", length = 45, columnDefinition = "VARCHAR(80) DEFAULT ''")
 	private String imgName;//图片名字
+	@Column(name = "SUFFIX", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String suffix;//图片后缀
 	
 	public String getImageTypeId() {

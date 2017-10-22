@@ -1,10 +1,18 @@
 package com.huitian.po.image;
 
-import com.huitian.po.base.StringIdPo;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+import com.huitian.po.base.StringIdPo;
+@Entity
+@Table(name = "HT_IMAGETYPE")
 public class ImageType extends StringIdPo{
+	@Column(name = "TYPENAME", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String typeName;
+	@Column(name = "TYPECODE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String typeCode;
+	@Column(name = "USE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String use;
 	public String getTypeName() {
 		return typeName;
