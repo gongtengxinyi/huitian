@@ -5,4 +5,9 @@
 <script src="static/scripts/core/ifu-template.js"></script>
 <script src="static/scripts/core/ifu-form.js"></script>
 <script src="static/scripts/core/ifu-util.js"></script>
+<<<<<<< HEAD
+=======
+<script src="static/js/numeric-directive.js"></script>
+
+>>>>>>> branch 'master' of https://github.com/gongtengxinyi/huitian.git
 <script src="static/scripts/core/common.js"></script>

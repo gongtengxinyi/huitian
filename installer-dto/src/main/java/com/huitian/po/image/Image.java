@@ -22,12 +22,7 @@ public class Image extends StringIdPo{
 	private String imgUrl;//图片url
 	
 	
-	public String getImgUrl() {
-		return imgUrl;
-	}
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
+
 	public String getImageTypeId() {
 		return imageTypeId;
 	}
@@ -57,6 +52,12 @@ public class Image extends StringIdPo{
 	}
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 	
 }

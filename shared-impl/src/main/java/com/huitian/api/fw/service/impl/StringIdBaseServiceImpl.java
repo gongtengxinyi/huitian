@@ -59,4 +59,5 @@ public class StringIdBaseServiceImpl<T> extends BaseServiceImpl<T, String> imple
     public List<T> findList(List<Filter> filters, List<Order> orders) {
         return findList(null, filters, orders);
     }
+
 }

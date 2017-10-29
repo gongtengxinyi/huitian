@@ -25,6 +25,4 @@ public class ImageType extends StringIdPo{
 		this.typeCode = typeCode;
 	}
 
-	
-
 }
