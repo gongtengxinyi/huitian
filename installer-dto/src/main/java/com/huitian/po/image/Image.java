@@ -18,6 +18,8 @@ public class Image extends StringIdPo{
 	private String imgName;//图片名字
 	@Column(name = "SUFFIX", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String suffix;//图片后缀
+	@Column(name = "imgUrl", length = 80, columnDefinition = "VARCHAR(80) DEFAULT ''")
+	private String imgUrl;//图片url
 	
 	public String getImageTypeId() {
 		return imageTypeId;
@@ -48,6 +50,12 @@ public class Image extends StringIdPo{
 	}
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 	
 }

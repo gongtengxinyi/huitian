@@ -14,14 +14,15 @@ import com.huitian.po.indent.Wordblank;
 @Controller("webWordblankController")
 public class WordblankController  {
 
-	@RequestMapping(value = "demo")
+	@RequestMapping(value = "AssociatedinformationGet")
 	@ResponseBody
 	public String AssociatedinformationGet(HttpServletRequest request) {
 		return "login";
 	}
 	@RequestMapping(value = "wordblankList")
 	@ResponseBody
-	public List<Wordblank> getAllWordblankList(HttpServletRequest request,) {
-		return "login";
+	public List<Wordblank> getAllWordblankList(HttpServletRequest request) {
+		//return "login";
+		return null;
 	}
 }

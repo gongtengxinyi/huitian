@@ -8,7 +8,7 @@ import com.huitian.po.base.StringIdPo;
 @Entity
 @Table(name = "HT_ACCOUNT")
 public class Account extends StringIdPo{
-	@Column(name = "NAME", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
+	@Column(name = "NAME", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
 	private String name;
 	@Column(name = "MOBILE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String mobile;
