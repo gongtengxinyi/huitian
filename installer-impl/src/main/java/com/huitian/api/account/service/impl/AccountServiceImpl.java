@@ -11,7 +11,7 @@ import com.huitian.repo.fw.dao.SqlDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service(CenterAccountService.BEAN_NAME)
+@Service(AccountService.BEAN_NAME)
 public class AccountServiceImpl extends StringIdBaseServiceImpl<Account>implements AccountService {
 
 
