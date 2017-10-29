@@ -10,7 +10,7 @@ import com.huitian.po.base.StringIdPo;
 @Table(name = "HT_CENTERACCOUNT")
 public class CenterAccount extends StringIdPo {
 	@Column(name = "CENTERID", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
-	private String cennterId;// 用户属于哪一个加工中心（其值为HT_CENTER表中的id字段）
+	private String centerId;// 用户属于哪一个加工中心（其值为HT_CENTER表中的id字段）
 	@Column(name = "NAME1", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String name1;// 登录用户名
 	@Column(name = "PASSWORD", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
@@ -18,12 +18,13 @@ public class CenterAccount extends StringIdPo {
 	@Column(name = "SYSTEMPUSH", length = 45, columnDefinition = "VARCHAR(45) DEFAULT 'NO'")
 	private String systemPush;//是否是系统推送账号 
 	
-	public String getCennterId() {
-		return cennterId;
+	
+	public String getCenterId() {
+		return centerId;
 	}
 
-	public void setCennterId(String cennterId) {
-		this.cennterId = cennterId;
+	public void setCenterId(String centerId) {
+		this.centerId = centerId;
 	}
 
 	public String getName1() {

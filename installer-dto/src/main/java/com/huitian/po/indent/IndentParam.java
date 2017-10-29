@@ -23,7 +23,7 @@ import com.huitian.util.Dto;
 /***
  * 订单信息表
  * 
- * @author liurengjie
+ * @author dingjianlei
  *
  */
 

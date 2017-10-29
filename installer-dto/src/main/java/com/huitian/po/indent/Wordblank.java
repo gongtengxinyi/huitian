@@ -8,61 +8,64 @@ import com.huitian.po.base.StringIdPo;
 @Entity
 @Table(name = "HT_WORDBLANK")
 public class Wordblank extends StringIdPo{
-@Column(name = "WORDBLANKTYPEID", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
-private String wordblankTypeId;
-@Column(name = "LENGTH", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
-private double length;
-@Column(name = "WIDTH", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
-private double width;
-@Column(name = "HEIGHT", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
-private double height;
-@Column(name = "PRICE", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
-private double price;
-@Column(name = "FROM", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
-private String from;//Huoyuan
-@Column(name = "USE", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
-private String use;
-public String getWordblankTypeId() {
-	return wordblankTypeId;
+	/**
+	 * name1	varchar(20)	否		毛坯名称
+maopiWeight	double	否		克重
+maopiWidth	double	否		宽度
+material	varchar(20)	否		材质
+maopiPrice	double	否	0	价格
+	 */
+
+@Column(name = "NAME1", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
+private String name1;
+@Column(name = "MAOPIWEIGHT", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
+private double maopiWeight;
+@Column(name = "MAOPIWIDTH", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
+private double maopiWidth;
+@Column(name = "MAOPIPRICE", precision = 11, scale = 3, columnDefinition = "DOUBLE(11, 3) DEFAULT 0")
+private double maopiPrice;
+@Column(name = "MATERIAL", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
+private String material;//Huoyuan
+@Column(name = "WORDBLANKURL", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
+private String wordBlankUrl;//Huoyuan
+
+
+
+public String getWordBlankUrl() {
+	return wordBlankUrl;
 }
-public void setWordblankTypeId(String wordblankTypeId) {
-	this.wordblankTypeId = wordblankTypeId;
+public void setWordBlankUrl(String wordBlankUrl) {
+	this.wordBlankUrl = wordBlankUrl;
 }
-public double getLength() {
-	return length;
+public String getName1() {
+	return name1;
 }
-public void setLength(double length) {
-	this.length = length;
+public void setName1(String name1) {
+	this.name1 = name1;
 }
-public double getWidth() {
-	return width;
+public double getMaopiWeight() {
+	return maopiWeight;
 }
-public void setWidth(double width) {
-	this.width = width;
+public void setMaopiWeight(double maopiWeight) {
+	this.maopiWeight = maopiWeight;
 }
-public double getHeight() {
-	return height;
+public double getMaopiWidth() {
+	return maopiWidth;
 }
-public void setHeight(double height) {
-	this.height = height;
+public void setMaopiWidth(double maopiWidth) {
+	this.maopiWidth = maopiWidth;
 }
-public double getPrice() {
-	return price;
+public double getMaopiPrice() {
+	return maopiPrice;
 }
-public void setPrice(double price) {
-	this.price = price;
+public void setMaopiPrice(double maopiPrice) {
+	this.maopiPrice = maopiPrice;
 }
-public String getFrom() {
-	return from;
+public String getMaterial() {
+	return material;
 }
-public void setFrom(String from) {
-	this.from = from;
-}
-public String getUse() {
-	return use;
-}
-public void setUse(String use) {
-	this.use = use;
+public void setMaterial(String material) {
+	this.material = material;
 }
 
 }

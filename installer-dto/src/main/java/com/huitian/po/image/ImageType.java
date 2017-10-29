@@ -12,8 +12,6 @@ public class ImageType extends StringIdPo{
 	private String typeName;
 	@Column(name = "TYPECODE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String typeCode;
-	@Column(name = "USE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
-	private String use;
 	public String getTypeName() {
 		return typeName;
 	}
@@ -26,12 +24,7 @@ public class ImageType extends StringIdPo{
 	public void setTypeCode(String typeCode) {
 		this.typeCode = typeCode;
 	}
-	public String getUse() {
-		return use;
-	}
-	public void setUse(String use) {
-		this.use = use;
-	}
+
 	
 
 }

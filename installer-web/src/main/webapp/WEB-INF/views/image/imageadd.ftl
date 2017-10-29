@@ -1,5 +1,5 @@
 <#include "/include/common.ftl" />
-<title>新增甲方</title>
+<title>新增图片</title>
 <style type="text/css">
 .grid {
   width: 100%;
@@ -20,7 +20,7 @@
 
     <form name="form1" class="form-horizontal" novalidate>
       <div class="panel panel-default">
-        <div class="panel-heading">甲方基本信息</div>
+        <div class="panel-heading">添加图片</div>
         <div class="panel-body">
 
           <div class="row">

@@ -28,3 +28,4 @@
 <link rel="stylesheet" href="static/css/homepage.css" type="text/css" />
 <link rel="stylesheet" href="static/css/menu.css" type="text/css" />
 <script src="static/js/jquery.min.js"></script>
+<script src="static/angular/angular.js"></script>

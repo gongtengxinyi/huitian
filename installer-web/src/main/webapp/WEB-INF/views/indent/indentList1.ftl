@@ -68,7 +68,7 @@
 				<!-- releaseDate begin -->
 				<div class="col-md-8">
 					<div class="row">
-						<label class="control-label text-nowrap col-md-4 col-lg-2">发布日期</label>
+						<label class="control-label text-nowrap col-md-4 col-lg-2">下单日期</label>
 						<div class="col-md-8 col-lg-10">
 							<div class="row">
 								<div class="col-md-6">
@@ -107,6 +107,22 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-md-3">
+				        <div class="row">
+				            	<div class="form-group">
+							<label class="control-label text-nowrap col-md-4">订单状态</label>
+							<div class="col-md-8">
+								<select id="sel" class="form-control" ng-change="query()"
+									ng-model="sf.status">
+									<option value="wait">排队中订单</option>
+									<option value="work">加工中订单</option>
+									<option value="dispather">代发货订单</option>
+									
+								</select>
+							</div>
+						</div>
+				        </div>
+				</div>
 			</div>
 		 	<div class="row">
 				<div>
@@ -128,22 +144,15 @@
 	<div class="panel panel-default">
 		<table class="table table-bordered table-striped">
 			<thead>
-				<tr>
-					<th style="width: 20px;">&nbsp;</th>
+				<tr>				
 					<th>订单ID</th>
 					<th>业主姓名</th>
-					<th>业主地址</th>
-					<th>甲方名称</th>
-					<th>项目名称</th>
-					<th>订单类别</th>
-					<th>执行状态</th>
+					<th>业主手机号</th>
 					<th>订单状态</th>
-					<th>接单日期</th>
-					<th>签到日期</th>
-					<th>工匠金额</th>
-					<th>经理人金额</th>
-					<th>抢单工人</th>
-					<th>操作</th>
+					<th>图案类别</th>
+					<th>结账方式</th>
+					<th>加工中心</th>
+					
 				</tr>
 			</thead>
 			<tbody ng-repeat="data in rows">
@@ -152,20 +161,6 @@
 			   1
 			   </td>
 			   <td>
-			   1
-			   </td><td>
-			   1
-			   </td><td>
-			   1
-			   </td><td>
-			   1
-			   </td><td>
-			   1
-			   </td><td>
-			   1
-			   </td><td>
-			   1
-			   </td><td>
 			   1
 			   </td><td>
 			   1
