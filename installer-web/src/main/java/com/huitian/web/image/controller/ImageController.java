@@ -50,6 +50,7 @@ HashMap<String,Object> map =new HashMap<String,Object>();
 			map.put("success", true);
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			map.put("success", false);
 		}	
 		return map;
@@ -76,6 +77,7 @@ HashMap<String,Object> map =new HashMap<String,Object>();
 			map.put("success", true);
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			map.put("success", false);
 		}	
 		return map;

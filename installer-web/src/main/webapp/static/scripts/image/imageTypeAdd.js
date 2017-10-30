@@ -1,16 +1,15 @@
 var app = angular.module('app', ['ui.bootstrap', 'ifu.util']);
 
-app.controller('centerAccountAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
+app.controller('imageTypeAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
 function($scope, $http, $window, UrlUtil, $uibModal) {
   $scope.data = {};
   $scope.goList = function() {
-	    $window.location.href = UrlUtil.transform('centerAccount/addCenterAccount.do');
+	    $window.location.href = UrlUtil.transform('image/addImageType.do');
 	  }
   $scope.save = function() {
-    $("#saveBtn").attr("disabled", true);
     return $http({
       method : 'POST',
-      url : 'centerAccount/saveCenterAccount.do', 
+      url : 'image/saveImageType.do', 
       headers : {
         'Content-Type' : undefined
       },
@@ -33,13 +32,13 @@ function($scope, $http, $window, UrlUtil, $uibModal) {
       var data = response.data;
       if (data.success) {
         var modalScope = $scope.$new(true);
-        modalScope.message ="添加账号中心成功";
+        modalScope.message ="添加图片类别成功";
         UrlUtil.autoJump(modalScope, $scope.goList);
       } else {
     	  $("#saveBtn").attr("disabled", false);
         var modalScope = $scope.$new(true);
-        modalScope.title = "添加账号中心失败";
-        modalScope.message = "添加账号中心失败";
+        modalScope.title = "添加图片类别失败";
+        modalScope.message = "添加图片类别失败";
         $uibModal.open({
           templateUrl : 'template/modal/alert.html',
           scope : modalScope
