@@ -47,7 +47,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            
+           <!--  <div class="col-md-6">
               <div class="form-group">
                 <label class="control-label col-md-4">服务态度评分：</label>
                 <div class="col-md-8">
@@ -55,7 +56,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="form-group">
             <label class="control-label col-md-2">业主评价：</label>
@@ -81,14 +82,14 @@
           </div>
           
            <div class="row">
-            <div class="col-md-6">
+           <!--  <div class="col-md-6">
               <div class="form-group">
                 <label class="control-label col-md-4">工人邀请评价时间：</label>
                 <div class="col-md-8">
                   <p class="form-control-static">{{data.workerInviteDate}}</p>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
               <div class="form-group">
                 <label class="control-label col-md-4">业主评价时间：</label>
@@ -101,9 +102,9 @@
 
           <div class="form-group">
             <div class="col-md-4 col-md-offset-2">
-              <button type="button" class="btn btn-success"
-                ng-click="goBack();">
-                <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;返回
+              <button type="button" class="btn btn-success" onclick="window.close()"
+                ><!-- ng-click="goBack();" -->
+                <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;关闭
               </button>
             </div>
           </div>

@@ -68,7 +68,7 @@
     <div></div>
   </a> <a class="list" href="prov/provList.do">城市设置
     <div></div>
-  </a> <a class="list" href="javascript:">积分设置
+  </a> <a class="list" href="javascript:">信用分设置
     <div></div>
   </a> <a class="list" href="javascript:">抢单设置
     <div></div>

@@ -58,14 +58,21 @@
         </div>
         <div class="row">
         
-          <div class="col-md-5">
+          <div class="col-md-2">
            
           </div>
-          <div class="col-md-10">
-            <button type="button" class="btn btn-warning pull-right"
+          <div class="col-md-8">
+          <#if Except=="YES">
+            <button type="button" class="btn btn-warning "
               ng-click="lookException();">
               <span class="glyphicon glyphicon-eye-open"></span>&nbsp;查看异常列表
             </button>
+            </#if> 
+               
+             <#if ExceptPic=="YES">
+             <a class="btn btn-primary btn-xs" href="fs/downloadZip.do?type=EXCEPTION&indentId={{data.id}}">
+              <span class="glyphicon glyphicon-cloud-download"> 导出异常图片</span></a>
+           </#if>
             
             <!--  <button type="button" class="btn btn-warning "
               ng-click="lookContact();">
@@ -77,9 +84,11 @@
           <div class="col-md-2">
             <button type="button" class="btn btn-success pull-right"
               ng-click="goBack();">
+              
               <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;返回
             </button>
           </div>
+          
          <!--  <div>
           <span ng-if="'${evaluate}'=='EVALUATED'">${evaluate}</span>
           </div> -->

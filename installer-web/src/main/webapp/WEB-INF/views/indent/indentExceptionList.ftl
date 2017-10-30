@@ -50,7 +50,7 @@
                <td>{{data.idea}}</td>
                <td>{{data.adminName1}}</td>
                <td>{{data.finishDateString}}</td>
-              <td><a href="indentExc/manageException.do?id={{data.id}}" class="btn btn-success btn-xs">详细信息</a></td>
+              <td><a  href="indentExc/manageException.do?id={{data.id}}" class="btn btn-success btn-xs">详细信息</a></td>
             </tr>
           </tbody>
        

@@ -10,5 +10,5 @@ import com.huitian.repo.fw.dao.StringIdBaseDao;
  * *content:
  */
 public interface AccountDao extends StringIdBaseDao<Account> {
-    String BEAN_NAME = "AccountDao";
+    String BEAN_NAME = "accountDao";
 }

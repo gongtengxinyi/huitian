@@ -26,7 +26,8 @@ public class HuitianController {
 	@ResponseBody
 	public HuitianResult pcterminalLogin(@RequestBody String data) {
 	  Filter filter = JacksonHelper.toObject(data, Filter.class);
-	  
+	  HuitianResult HuitianResult=new HuitianResult();
+	  return HuitianResult;
 		
 	}
 	/**

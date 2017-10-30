@@ -10,5 +10,5 @@ public interface AccountService extends StringIdBaseService<Account> {
      * 绘天接口测试
      * 
      */
-    String BEAN_NAME = "account";
+    String BEAN_NAME = "accountService";
 }

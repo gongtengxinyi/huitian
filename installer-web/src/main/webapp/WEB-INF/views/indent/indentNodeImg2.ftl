@@ -27,7 +27,7 @@
                       <div class="my-gallery" itemscope>
                        <div class="col-md-12">
                         <!--   <img width="100%" height="200" src="${imgUrl.fileUrl}"> -->
-                       
+                     
                         <#list indentNodeStepItem.imgUrlList as imgUrl>
                         <div class="row">
                          <figure itemprop="associatedMedia" itemscope >
