@@ -1,12 +1,16 @@
-var app = angular.module('app', ['ui.bootstrap', 'ifu.util']);
+var app = angular
+    .module('app',// 
+    ['ui.grid', 'ui.grid.edit', 'ui.grid.cellNav', 'ui.grid.validate', 'ui.bootstrap',
+        'ifu.cityselect', 'ifu.form', 'ifu.util']);
 
 app.controller('imageTypeAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
-function($scope, $http, $window, UrlUtil, $uibModal) {
+function($scope, $http, $window, UrlUtil, $uibModal,UrlUtil) {
   $scope.data = {};
   $scope.goList = function() {
 	    $window.location.href = UrlUtil.transform('image/addImageType.do');
 	  }
   $scope.save = function() {
+	  alert("dd");
     return $http({
       method : 'POST',
       url : 'image/saveImageType.do', 
