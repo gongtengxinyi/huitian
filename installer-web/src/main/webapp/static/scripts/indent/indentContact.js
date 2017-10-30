@@ -7,7 +7,7 @@ app.controller('IndentController',//
 	var pageNo=$("#pageNo").val();
  
 	$scope.data = {};
- 
+	
   $scope.update = function() {
 	  
 	    if (!$scope.form1.$valid) {
@@ -24,10 +24,10 @@ app.controller('IndentController',//
 	    if($("#ifRemind").prop('checked')==true){//如果选择首页提醒，字段置为YES
 			  
 			  $scope.data.ifRemind="YES";		  
-		  }
-		  else{
+		}
+		else{
 			  $scope.data.ifRemind="NO";
-		  }
+		}
 	 
 	    return $http({
 	        method : 'POST',
@@ -35,6 +35,10 @@ app.controller('IndentController',//
 	        headers : {
 	          'Content-Type' : undefined
 	        },
+	        data : {
+		          data : $scope.data, //实体类对象json
+		          file : $scope.file //文件		         
+		        },
 	        transformRequest : function(data) {
 	          var formData = new FormData();        
 	          formData.append("data", angular.toJson(data.data));        
@@ -45,11 +49,8 @@ app.controller('IndentController',//
 	            }
 	          }
 	          return formData;
-	        },
-	        data : {
-	          data : $scope.data, //实体类对象json
-	          file : $scope.file //文件
 	        }
+	        
 	      }).then(function(response) {
 	    	  var data = response.data;
 		      if (data.success) {
@@ -67,19 +68,16 @@ app.controller('IndentController',//
 		      }
 		    });
 	    
-	    
-	    
-	    
-	    
 		  }
   
- 
-
-  
- 
   
   $scope.goBack=function(){
-	  $window.location.href = UrlUtil.transform('indent/indentList.do?pageNo='+pageNo);
+	  if($scope.data.action=="deleteRestore"){
+		  $window.location.href = UrlUtil.transform('indent/indentListDel.do?pageNo='+pageNo);
+	  }
+	  else		  {
+	     $window.location.href = UrlUtil.transform('indent/indentList.do?pageNo='+pageNo);
+	  }
   }
   
 

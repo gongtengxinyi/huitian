@@ -27,7 +27,7 @@ function($scope, $http,$window,UrlUtil) {
   $scope.$watch('pager.currentPage', $scope.query);
   
   $scope.goBack = function() {
-	    $window.location.href = UrlUtil.transform('worker/workerList.do?pageNo='+pageNo);
+	    $window.location.href = UrlUtil.transform('manager/managerList.do?pageNo='+pageNo);
   }
 
 }]);

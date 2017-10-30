@@ -54,8 +54,10 @@
           <tr>
             <th>操作人</th>
             <th>操作动作</th>
+            <th>需要跟进</th>
             <th>详情</th>
             <th>操作日期</th>
+            <th>操作</th> 
            
           </tr>
         </thead>
@@ -63,8 +65,12 @@
           <tr>
             <td>{{data.createBy}}</td>
             <td><a href="indent/indentContactEdit.do?id={{data.id}}&&pageNo={{pager.currentPage}}">{{data.actionDisp}}</a></td>
+            <td><span ng-if="data.ifRemind=='YES'">是</span></td>
             <td>{{data.remarks}}</td>
             <td>{{data.createDateStr}}</td>
+           
+            <td> <span> <#if Session.USER_BEAN.isAdmin==true><a href="" ng-click="delContact()" 
+              class="btn btn-success btn-xs">删除</a></#if></span></td>
            
           </tr>
         </tbody>

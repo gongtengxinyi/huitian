@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.bootstrap', 'ifu.util']);
+var app = angular.module('app', ['ui.bootstrap','ifu.form', 'ifu.util']);
 
 app.controller('SctypeContentController', ['$scope', '$http', '$window', 'UrlUtil',//
 function($scope, $http, $window, UrlUtil) {
@@ -8,11 +8,11 @@ function($scope, $http, $window, UrlUtil) {
   };
 
   $scope.doSave = function() {
-
+     
     if (!$scope.form1.$valid) {
       return false;
     }
-
+    $("#saveBtn").attr("disabled", true);
     $http.post('sctypeContent/doSave.do', $scope.data).then(function() {
       $scope.goBack();
     });

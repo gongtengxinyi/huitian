@@ -23,7 +23,7 @@
 		
 	</header> -->
 	</div>
-	<script type="text/javascript" src="static/scripts/top.js"></script>
+	<script type="text/javascript" src="static/scripts/top1.js"></script>
 
 
 	<!-- XXXEnd -->

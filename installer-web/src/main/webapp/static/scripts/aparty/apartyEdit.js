@@ -14,20 +14,7 @@ app.controller('ApartyController', ['$scope', '$http', '$window', '$uibModal', '
     }
   }).then(function(response) {
     $scope.data = response.data;  
-    console.log($scope.data.isAllIndent);
-    if($scope.data.isZhizhuang=="是"){
-    	  $("#isZhizhuang").attr('checked',true); 
-    }
-    else {
-    	$("#isZhizhuang").attr('checked',false); 
-    }
-    
-    if($scope.data.isAllIndent=="是"){
-  	  $("#isAllIndent").attr('checked',true); 
-    }
-    else {
-  	  $("#isAllIndent").attr('checked',false); 
-    }
+   
        
   });
 
@@ -48,6 +35,13 @@ app.controller('ApartyController', ['$scope', '$http', '$window', '$uibModal', '
 		  $scope.data.isAllIndent="否";
 		 
 	  }
+     if($("#isRuzhu").prop('checked')==true){
+		  
+		  $scope.data.isRuzhu="是";		  
+	  }
+	  else{
+		  $scope.data.isRuzhu="否";
+	  }
 	  
     if (!$scope.form1.$valid) {
       return false;
@@ -55,7 +49,7 @@ app.controller('ApartyController', ['$scope', '$http', '$window', '$uibModal', '
     for ( var d in $scope.contactsDatas) {
       $scope.data[d] = $scope.contactsDatas[d];
     }
-    $http.post('aparty/updateAparty.do', $scope.data).then(function() {
+    $http.post('aparty/doUpdateAparty.do', $scope.data).then(function() {
       $window.location.href = UrlUtil.transform('aparty/apartyList.do');
     });
   }
@@ -143,6 +137,10 @@ app.controller('Contact1Controller', ['$scope', '$http', function($scope, $http)
     displayName : '传真',
     name : 'fax',
     width : 90
+  }, {
+	displayName : '允许登录微信号',
+	name : 'ifWebChat',
+	width : 120
   }, {
     displayName : '操作',
     name : 'operator',

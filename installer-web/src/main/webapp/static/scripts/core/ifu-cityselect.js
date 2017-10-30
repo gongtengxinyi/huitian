@@ -16,6 +16,7 @@ angular.module('ifu.cityselect', ['ifu.cityselect.data'])//
      * angular.forEach(ds, function(o) { options.push({ v : o.v, n : o.n }); });
      * return options;
      */
+    
   }
 
   return {

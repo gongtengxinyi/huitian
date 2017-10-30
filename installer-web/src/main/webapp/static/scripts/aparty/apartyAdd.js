@@ -35,6 +35,13 @@ function($scope, $http, $window, $uibModal, UrlUtil) {
 		  $scope.data.isAllIndent="否";
 		 
 	  }
+     if($("#isRuzhu").prop('checked')==true){
+		  
+		  $scope.data.isRuzhu="是";		  
+	  }
+	  else{
+		  $scope.data.isRuzhu="否";
+	  }
 	  
     if (!$scope.form1.$valid) {
       var modalScope = $scope.$new(true);
@@ -47,7 +54,7 @@ function($scope, $http, $window, $uibModal, UrlUtil) {
       });  
       return false;
     }
-   
+	  $("#btnSave").attr("disabled", true);
     return $http.post('aparty/doSave.do', $scope.data).then(function(response) {
       var data = response.data;
       if (data.success) {
@@ -55,6 +62,7 @@ function($scope, $http, $window, $uibModal, UrlUtil) {
         modalScope.message = data.err_msg;
         UrlUtil.autoJump(modalScope, $scope.goBack);
       } else {
+    	  $("#btnSave").attr("disabled", false);
         alert(data.err_msg);
       }
     });
@@ -116,6 +124,10 @@ app.controller('Contact1Controller', ['$scope', '$http', function($scope, $http)
     displayName : '传真',
     name : 'fax',
     width : 90
+  }, {
+	displayName : '允许登录微信号',
+	name : 'ifWebChat',
+	width : 120
   }, {
     displayName : '操作',
     name : 'operator',

@@ -9,7 +9,7 @@ function($scope, $http, $window, $uibModal, UrlUtil) {
 	//在甲方名称上输入字符时，获取对应数据
 	$scope.doTypeaheadApartys = function(q) {
 		   
-		    return $http.post('aparty/doTypeaheadZhizhuang.do', {
+		    return $http.post('aparty/doTypeahead.do', {
 		      q : q
 		    }).then(function(response) {   
 		    			      
@@ -28,6 +28,13 @@ function($scope, $http, $window, $uibModal, UrlUtil) {
     }
   }).then(function(response) {
     $scope.data = response.data;
+    console.log($scope.data);
+    if($scope.data.ifGeneralAdmin=="YES"){//如果是首页提醒，复选框为选中状态
+  	  $("#ifGeneralAdmin").attr('checked',true); 
+   }
+   else {
+  	$("#ifGeneralAdmin").attr('checked',false); 
+   }
   });
   
   
@@ -47,8 +54,14 @@ function($scope, $http, $window, $uibModal, UrlUtil) {
     if ($scope.data.isSystem == 1) {
       return;
     }
-
-    $http.post('admin/update.do', $scope.data).then($scope.goBack);
+    if($("#ifGeneralAdmin").prop('checked')==true){//如果选择首页提醒，字段置为YES
+		  
+		  $scope.data.ifGeneralAdmin="YES";		  
+	}
+	else{
+		  $scope.data.ifGeneralAdmin="NO";
+	}
+    $http.post('admin/doUpdate.do', $scope.data).then($scope.goBack);
   };
 
   $scope.doDelete = function() {

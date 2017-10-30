@@ -18,7 +18,9 @@ function($scope, $http, $window) {
   $scope.$watch('pager.currentPage', $scope.query);
   
   $scope.goBack = function () {
-    $window.location.href = "manager/managerList.do?pageNo="+pageNo;
+   // $window.location.href = "manager/managerList.do?pageNo="+pageNo;
+	 // window.opener.location.reload();//刷新父页面
+	  window.close();
   }
 
 }]);

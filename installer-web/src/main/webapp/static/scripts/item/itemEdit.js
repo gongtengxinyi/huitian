@@ -192,6 +192,25 @@ app.controller('ItemController', ['$scope', '$http', '$window', '$uibModal', 'Ur
 
   $scope.save = function() {
 	  
+	  
+	  var checkbox1 = $("[type=checkbox]");
+	  var n=0;
+	  checkbox1.each(function(i) {    	  //遍历checkbox   
+		  if($(this).is(':checked'))
+			  n=n+1;
+	  });
+	 
+      if (n==0){
+    	  var modalScope = $scope.$new(true);
+          modalScope.title = "保存项目失败";
+          modalScope.message = "请选择至少一项服务类型！";
+          $uibModal.open({
+            templateUrl : 'template/modal/alert.html',
+            scope : modalScope
+          });
+          return false;
+      }
+	  
 	for (var int = 0; int < count; int++) {
 	    	if($("#actualPrice"+[int]).val()==""){
 	    		//alert($("#name1"+[int]).val()+"的报价信息不完整，请输入报价!");
@@ -207,8 +226,15 @@ app.controller('ItemController', ['$scope', '$http', '$window', '$uibModal', 'Ur
 	    	}
 	}
 	
-    if (!$scope.form1.$valid) {
-      return false;
+    if (!$scope.form1.name1.$valid) {
+    	 var modalScope = $scope.$new(true);
+         modalScope.title = "当前信息填写不完整，请完善";
+         modalScope.message = "当前信息填写不完整，请完善！";
+         $uibModal.open({
+           templateUrl : 'template/modal/alert.html',
+           scope : modalScope
+         }); 
+        return false;
     }
     $scope.data.itemPriceList = [];
     for (var int = 0; int < count; int++) {

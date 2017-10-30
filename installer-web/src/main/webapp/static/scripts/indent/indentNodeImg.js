@@ -1,5 +1,6 @@
 var app = angular.module('app', ['ui.bootstrap','ifu.util']);
 
+
 app.controller('IndentNodeImgController',//
 ['$scope', '$window', 'UrlUtil','$http',//
 function($scope, $window, UrlUtil,$http) {

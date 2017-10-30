@@ -35,10 +35,20 @@ function($scope, $http, $uibModal) {
 
   $scope.query = function() {
 	  
-	  //如果选择了测试订单
+	  //如果选择了直装
 	    if($("#isZhizhuang").prop('checked')==true){  
 	    	
 			  $scope.sf.isZhizhuang="是";	//赋值,以供后台筛选（）		  
+		}
+	    else{
+	    	 $scope.sf.isZhizhuang="否";	//赋值,以供后台筛选（）		
+	    }
+	    //如果选择了入驻商家
+	    if($("#isRuzhu").prop('checked')==true){  
+	    	
+			  $scope.sf.isRuzhu="是";	//赋值,以供后台筛选（）		  
+		}else{
+			 $scope.sf.isRuzhu="否";	//赋值,以供后台筛选（）	
 		}
 		 
 	 

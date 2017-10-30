@@ -11,11 +11,12 @@ angular.module('ifu.cityselect2', [])//
 
   var buildOptionDatas = function(ds) {
     return ds;
-    /*
-     * var options = [emptyOption]; if (!ds) { return options; }
-     * angular.forEach(ds, function(o) { options.push({ v : o.v, n : o.n }); });
-     * return options;
-     */
+    
+      /*var options = [emptyOption]; if (!ds) { return options; }
+      angular.forEach(ds, function(o) { options.push({ v : o.v, n : o.n }); });
+   
+      return options;*/
+     
   }
 
   return {
@@ -45,10 +46,12 @@ angular.module('ifu.cityselect2', [])//
 
           var pId = pSel.selectedIndex;
           var selectedProv;
+         
           while ((selectedProv = CityData[pId]) && selectedProv.v != newVal) {
             pId++;
           }
           if (selectedProv && selectedProv.c) {
+        	 
             $scope.cities = buildOptionDatas(selectedProv.c);
           } else {
             $scope.cities = undefined;

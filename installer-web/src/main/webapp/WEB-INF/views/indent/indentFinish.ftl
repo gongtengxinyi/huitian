@@ -13,7 +13,18 @@
     <input type="hidden" id="pageNo" value="${pageNo}" ng-init="pageNo='${pageNo}'">
     <input type="hidden" id="indentId" ng-model="data.indentId" value="${id}" ng-init="data.indentId='${id}'">
       <div class="panel panel-default">
+      <#if type=="indentFinish">
         <div class="panel-heading">强制完成</div>
+       </#if>
+        <#if type=="returnIndent">
+       
+        <div class="panel-heading">退回订单</div>
+        </#if>
+        
+        <#if type=="returnMerchant">
+       
+        <div class="panel-heading">退回商家</div>
+        </#if>
         <div class="panel-body">
         
         <div class="form-group"
@@ -39,9 +50,21 @@
       </div>
      <div class="form-group">
             <div class="col-md-10 col-md-offset-2">
+             <#if type=="indentFinish">
             <button type="submit" class="btn btn-primary" ng-click="update();">
                 <span class="glyphicon glyphicon-ok"></span>保存
              </button>
+             </#if>
+             <#if type=="returnIndent">
+            <button type="submit" class="btn btn-primary" ng-click="update2();">
+                <span class="glyphicon glyphicon-ok"></span>保存
+             </button>
+             </#if>
+              <#if type=="returnMerchant">
+            <button type="submit" class="btn btn-primary" ng-click="update3();">
+                <span class="glyphicon glyphicon-ok"></span>保存
+             </button>
+             </#if>
              &nbsp;&nbsp;&nbsp;
              
               <button type="button" class="btn btn-success"

@@ -74,6 +74,31 @@ function($scope,$http, $uibModal, $window,UrlUtil) {
 	    });
   } 
   
+  //转为正式工匠
+  $scope.changetoOnline =function(){ 
+	  var modalScope = $scope.$new(true);
+	  var id=this.data.id;
+	  console.log(id);
+	    modalScope.message = "确认要转为正式工匠吗？ ";
+
+	    $uibModal.open({
+	      templateUrl : 'template/modal/delete.html',
+	      scope : modalScope
+	    }).result.then(function() {
+	      $http.get('virtualWorker/changetoOnline.do', {
+	        params : {
+	          id : id,
+	          pageNo:$scope.pager.currentPage
+	          
+	        }
+	      }).then(function(response) {	  
+	    	 
+	    	  $window.location.href = UrlUtil.transform('virtualWorker/virtualWorkerList.do?pageNo='+$scope.pager.currentPage);
+	          
+	      });
+	    });
+  } 
+  
 //导出报表
   $scope.export =function(){ 
 	  $window.location.href = UrlUtil.transform('worker/exportExcel.do?pageNo='+$scope.pager.currentPage);

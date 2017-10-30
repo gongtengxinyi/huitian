@@ -1,8 +1,8 @@
-var app = angular.module('app', ['ui.bootstrap']);
+var app = angular.module('app', ['ui.bootstrap','ifu.template']);
 
 app.controller('ItemListController',//
-    ['$scope', '$http',//
-     function($scope, $http) {
+    ['$scope', '$http','$uibModal',//
+     function($scope, $http, $uibModal) {
     	var pageNo=$("#pageNo").val();//将查看内容页面的PageNo传递回来，放入隐藏域，在这里取值
    	 $scope.pager = { //初始化pager的各个属性，totalItems，itemsPerPage都不能少，直接设置currentPage一个属性不起作用。
    	      totalItems:100,
@@ -42,7 +42,50 @@ app.controller('ItemListController',//
         $scope.overDate.opened = true;
       }
       
-
+      //停止订单
+      $scope.doClose = function(id) {
+    	  var modalScope = $scope.$new(true);
+    	    modalScope.message = "您确认要停用该订单吗？";
+    	    $uibModal.open({
+    	      templateUrl : 'template/modal/confirm.html',
+    	      scope : modalScope
+    	    }).result.then(function() {
+    	      $http.get('item/controlItem.do', {
+    	        params : {
+    	          id : id,
+    	          mark : '1'
+    	        }
+    	      }).then(function(response) {
+    	        var data = response.data;
+    	        if (data.success) {
+    	          location.replace(location);
+    	        }
+    	      });
+    	    });
+      
+      }
+      //启用订单
+      $scope.doOpen = function(id) {
+    	    var modalScope = $scope.$new(true);
+    	    modalScope.message = "您确认要启用该订单吗？";
+    	    $uibModal.open({
+    	      templateUrl : 'template/modal/confirm.html',
+    	      scope : modalScope
+    	    }).result.then(function() {
+    	      $http.get('item/controlItem.do', {
+    	        params : {
+    	          id : id,
+    	          mark : '2'
+    	        }
+    	      }).then(function(response) {
+    	        var data = response.data;
+    	        if (data.success) {
+    	          location.replace(location);
+    	        }
+    	      });
+    	    });
+    	  }
+      
       $scope.query = function() {
     	  
         $http.post('item/dolist.do', $scope.sf || {}, {
@@ -55,7 +98,6 @@ app.controller('ItemListController',//
         
           $scope.pager.totalItems = data.page.total;
           $scope.pager.itemsPerPage = data.page.pageSize;
-
           $scope.rows = data.rows;
           //如果是甲方用户，初始化甲方名称          
         //  $scope.sf.apartyIdDisp=data.apartyIdDisp;

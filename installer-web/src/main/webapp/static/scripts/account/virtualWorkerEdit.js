@@ -1,8 +1,8 @@
 var app = angular.module('app',// 
 ['ui.bootstrap', 'ifu.cityselect2', 'ifu.util']);
 
-app.controller('workerEditController', ['$scope', '$http', '$window', 'UrlUtil',
-    function($scope, $http, $window, UrlUtil) {
+app.controller('workerEditController', ['$scope', '$http', '$window', 'UrlUtil','$uibModal',
+    function($scope, $http, $window, UrlUtil, $uibModal) {
 	var pageNo=$("#pageNo").val();
 	
 	
@@ -26,9 +26,16 @@ app.controller('workerEditController', ['$scope', '$http', '$window', 'UrlUtil',
             var modalScope = $scope.$new(true);
             modalScope.message = "操作成功！";
             UrlUtil.autoJump(modalScope, $scope.goBack);
-          } else {
-            alert("操作失败，请稍后重试！");
-          }
+          } else {      
+        	 
+              var modalScope = $scope.$new(true);
+              modalScope.title = "保存失败";
+              modalScope.message = data.err_msg;
+              $uibModal.open({
+                templateUrl : 'template/modal/alert.html',
+                scope : modalScope
+              }); 
+            }
         });
       }
       

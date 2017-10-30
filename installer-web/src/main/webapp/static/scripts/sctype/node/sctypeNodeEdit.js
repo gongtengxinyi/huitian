@@ -2,16 +2,14 @@ var app = angular.module('app', ['ui.bootstrap', 'ifu.util']);
 
 app.controller('SctypeNodeController', ['$scope', '$http', '$window', 'UrlUtil',//
 function($scope, $http, $window, UrlUtil) {
-
-  // load
-  $http.get('sctypeNode/load.do', {
-    params : {
-      sctypeId : $scope.sctypeId
-    }
-  }).then(function(response) {
-    $scope.data = response.data;
-  });
-
+	  // load
+	  $http.get('sctypeNode/load.do', {
+	    params : {
+	      sctypeId : $scope.sctypeId
+	    }
+	  }).then(function(response) {
+	    $scope.data = response.data;
+	  });
   $scope.doSave = function() {
 
     if (!$scope.form1.$valid) {
@@ -23,6 +21,6 @@ function($scope, $http, $window, UrlUtil) {
   }
 
   $scope.goBack = function() {
-    $window.location.href = UrlUtil.transform('sctype/sctypeTree.do');
+    $window.location.href = UrlUtil.transform('sctype/goSctypeNodeTree.do');
   }
 }]);

@@ -22,4 +22,5 @@ public class AccountServiceImpl extends StringIdBaseServiceImpl<Account>implemen
 		super.setBaseDao(dao);
 	}
 
+
 }

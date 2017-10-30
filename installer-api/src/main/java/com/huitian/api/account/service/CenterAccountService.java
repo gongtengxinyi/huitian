@@ -10,5 +10,5 @@ public interface CenterAccountService extends StringIdBaseService<CenterAccount>
      * 绘天接口测试
      * 
      */
-    String BEAN_NAME = "centerAccount";
+    String BEAN_NAME = "centerAccountService";
 }

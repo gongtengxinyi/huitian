@@ -57,11 +57,40 @@ app.controller('TreeGridController', ['$scope', '$http', '$window', 'UrlUtil',
       "      <span class=\"glyphicon glyphicon-exclamation-sign\"></span>&nbsp;暂停中</a>" + //
       "</span>" + //
       "<span ng-if=\"row.branch['iEList'].length == 0&&row.level == 1\">无异常信息</span>" + //
+     
+      "<span ng-if=\"row.level == 1&&row.branch['code1']=='SELFCHECK'&& row.branch['stepStatus'] != 'BEFORE'\">" +
+      " <a class=\"btn btn-primary btn-xs\" " +
+      "   href=\"fs/downloadZip.do?type=SELFCHECK&indentId={{row.branch['indentId']}}\">" + //
+      "      <span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;导出照片</a>" +
+      "</span>" + //
+      "<span ng-if=\"row.level == 1&&row.branch['code1']=='INSTALL'&& row.branch['stepStatus'] == 'AFTER'\">" +
+      " <a class=\"btn btn-primary btn-xs\" " +
+      "   href=\"fs/downloadZip.do?type=INSTALL&indentId={{row.branch['indentId']}}\">" + //
+      "      <span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;导出照片</a>" +
+      "</span>" + //
+      "<span ng-if=\"row.level == 1&&row.branch['code1']=='MEASURE'&& row.branch['stepStatus'] == 'AFTER'\">" +
+      " <a class=\"btn btn-primary btn-xs\" " +
+      "   href=\"fs/downloadZip.do?type=MEASURE&indentId={{row.branch['indentId']}}\">" + //
+      "      <span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;导出照片</a>" +
+      "</span>" + //
+      "<span ng-if=\"row.level == 1&&row.branch['code1']=='TRANSPORT'&& row.branch['stepStatus'] == 'AFTER'\">" +
+      " <a class=\"btn btn-primary btn-xs\" " +
+      "   href=\"fs/downloadZip.do?type=TRANSPORT&indentId={{row.branch['indentId']}}\">" + //
+      "      <span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;导出照片</a>" +
+      "</span>" + //
+      "<span ng-if=\"row.level == 1&&row.branch['code1']=='ARRIVAL'&& row.branch['stepStatus'] != == 'AFTER'\">" +
+      " <a class=\"btn btn-primary btn-xs\" " +
+      "   href=\"fs/downloadZip.do?type=ARRIVAL&indentId={{row.branch['indentId']}}\">" + //
+      "      <span class=\"glyphicon glyphicon-cloud-download\"></span>&nbsp;导出照片</a>" +
+      "</span>" + //
       
       "<span ng-if=\"row.branch['stepType'] == 'UPLOAD' && row.branch['stepStatus'] == 'FINISH'\">" +
-      " <a class=\"btn btn-primary btn-xs\" " +
+      " <a   class=\"btn btn-primary btn-xs\" " +
       "   href=\"indentNodeStep/findImg.do?id={{row.branch['id']}}\">" + //
       "      <span class=\"glyphicon glyphicon-eye-open\"></span>&nbsp;查看照片</a>" +
+      
+     
+     
       "</span>" + //
       
       "<span ng-if=\"(row.branch['stepType'] == 'INVITEEVAL' || row.branch['stepType'] == 'HEXIAO') && row.branch['stepStatus'] == 'FINISH'\">" +

@@ -12,7 +12,7 @@ function($scope, $http, $window, UrlUtil) {
     if (!$scope.form1.$valid) {
       return false;
     }
-
+    $("#saveBtn").attr("disabled", true);
     $http.post('sctypeSort/save.do', $scope.data).then(function() {
       $scope.goBack();
     });

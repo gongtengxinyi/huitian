@@ -11,9 +11,11 @@
   <div ng-controller="IndentController">
     <form id="inputForm" name="form1" class="form-horizontal" novalidate enctype="multipart/form-data">
     <input type="hidden" id="pageNo" value="${pageNo}" ng-init="pageNo='${pageNo}'">
-    <input type="hidden" id="indentId" ng-model="data.indentId" value="${id}" ng-init="data.indentId='${id}'">
+    <input type="hidden" id="indentId" value="${id}" ng-init="data.indentId='${id}'">
+    <input type="hidden" id="type"   ng-model="data.action" ng-init="data.action='${type}'">
+    
       <div class="panel panel-default">
-        <div class="panel-heading">联系情况</div>
+        <div class="panel-heading">操作详情</div>
         <div class="panel-body">
         
         <div class="form-group"

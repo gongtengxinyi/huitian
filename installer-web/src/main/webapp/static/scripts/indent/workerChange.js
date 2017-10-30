@@ -5,8 +5,26 @@ app.controller('WorkerListController',//
 function($scope,$http, $uibModal, $window,UrlUtil) {
 	var pageNo=$("#pageNo").val();
 	var indentId=$("#indentId").val();
+	
+	  //将mworkerId写入隐藏域
+	  $scope.onTypeaheadWorkerSelect = function($item, $model, $label) {
+		    $scope.data.workerId = $item.value;
+		  };
+	//搜索工匠
+	 $scope.doTypeaheadWorker = function(q) {
+	    return $http.post('worker/doTypeaheadForChangeWorker.do', {
+	  
+	      city: $scope.data.city,
+	      managerId: $scope.data.managerId,
+	      q : q
+	    }).then(function(response) {
+	    	console.log(response.data);
+	      return response.data;
+	    });
+	  };
 	//经理人选择改变时，查询其名下的工匠
 	$scope.showWorker=function(){
+		
 		 $http.get('worker/workerDataAll.do',
 	      {
 	         params :
@@ -25,7 +43,7 @@ function($scope,$http, $uibModal, $window,UrlUtil) {
 	}
 	
 	 $scope.goBack = function() {
-   	  $window.location.href = UrlUtil.transform('indent/indentList.do?pageNo='+pageNo);
+   	    $window.location.href = UrlUtil.transform('indent/indentList.do?pageNo='+pageNo);
    	 
      }
 	 //更换工匠
@@ -37,13 +55,17 @@ function($scope,$http, $uibModal, $window,UrlUtil) {
 		      templateUrl : 'template/modal/confirm.html',
 		      scope : modalScope
 		    }).result.then(function() {
-		      $http.get('indent/workerChangeNew.do', {
+		     /* $http.get('indent/workerChangeNew.do', {
 		        params : {
 		        	workerId : $scope.data.workerId,
 		        	managerId: $scope.data.managerId,
 		        	indentId :indentId
-		        }
-		      }).then(function(response) {		    	  
+		        }*/
+		    	$http.post('indent/workerChangeNew.do', $scope.data ||{},{
+			        params : {
+			                   // pageNo :pageNo
+			                }
+			        }).then(function(response) {		    	  
 		    	  var modalScope = $scope.$new(true);
 		          modalScope.title = "更换成功!";
 		          modalScope.message = "更换工匠成功";

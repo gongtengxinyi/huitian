@@ -82,7 +82,13 @@ app.controller('IndentController',//
 	      return false;
 	    }
 	    
-	  
+	    if($("#ifRemind").prop('checked')==true){//如果选择需要跟进，字段置为YES
+			  
+			  $scope.data.ifRemind="YES";		  
+		  }
+		  else{
+			  $scope.data.ifRemind="NO";
+		  }
 	  
 	   
 	   /* $http.post('indent/doUpdateContact.do', $scope.data ||{},{

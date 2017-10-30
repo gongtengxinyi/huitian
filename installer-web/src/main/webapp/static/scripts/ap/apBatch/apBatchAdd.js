@@ -47,6 +47,7 @@ function($scope, $http, $window, $filter, $uibModal, UrlUtil) {
       $scope.alert();
       return false;
     }
+	  $("#btnSave").attr("disabled", true);
 
     $http.post('apBatch/doPreview.do', $scope.data).then(function(response) {
       var data = response.data;
@@ -56,6 +57,7 @@ function($scope, $http, $window, $filter, $uibModal, UrlUtil) {
           row.checked = true;
         });
       } else {
+    	  $("#btnSave").attr("disabled", false);
         $scope.rows = [];
         $scope.alert('无数据', data.err_msg || '没有找到符合条件的记录');
       }

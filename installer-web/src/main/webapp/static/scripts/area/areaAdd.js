@@ -11,6 +11,7 @@ app.controller('CityAddController', ['$scope', '$http', '$window', 'UrlUtil',
         }
         var he = $scope.data.cityId;
         console.log($scope.data);
+        $("#saveBtn").attr("disabled", true);
         $http.post('area/save.do', $scope.data).then(function() {
           $scope.goBack();
         });

@@ -77,7 +77,7 @@
             ng-class="{ 'has-error': form1.remarks.$invalid && (form1.$submitted || form1.remarks.$touched)}">
             <label class="control-label   col-md-2"></label>
             <div class="col-md-10">
-              <input type="checkbox" name="ifRemind" id="ifRemind" ng-model="data.ifRemind" >首页提醒&nbsp;&nbsp;
+              <input type="checkbox" name="ifRemind" id="ifRemind" ng-model="data.ifRemind" >需要跟进&nbsp;&nbsp;
             </div>
           </div>
             </div>
@@ -96,11 +96,10 @@
              
             </div>
           </div>
+        </div>
+        
       </div>
      
-      
-     
-        </div>
       </div>
     </form>
   </div>

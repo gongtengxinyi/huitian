@@ -30,6 +30,10 @@ app.controller('TreeGridController', ['$scope', '$http', '$window', 'UrlUtil',
         field : 'baseQuote',
         displayName : '基础报价'
       }, {
+          width : '100px',
+          field : 'priceReady',
+          displayName : '基准报价'
+      }, {
         width : '188px',
         field : 'op',
         displayName : '操作',
@@ -41,9 +45,7 @@ app.controller('TreeGridController', ['$scope', '$http', '$window', 'UrlUtil',
         "  &nbsp;<a class=\"btn btn-primary btn-xs\" " + //
         "    href=\"sctypeSort/sctypeSortAdd.do?sctypeId={{row.branch['id']}}\">" + //
         "      <span class=\"glyphicon glyphicon-plus\"></span>&nbsp;类别</a>" + //
-        "  &nbsp;<a class=\"btn btn-warning btn-xs\" " + //
-        "    href=\"sctypeNode/sctypeNodeEdit.do?sctypeId={{row.branch['id']}}\">" + //
-        "      <span class=\"glyphicon glyphicon-th-list\"></span>&nbsp;节点</a>" + //
+        "  &nbsp;" + //
         "</span>" + //
         "<span ng-if=\"row.level == 2\">" + //
         "  <a class=\"btn btn-success btn-xs\" " + //
