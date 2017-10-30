@@ -9,6 +9,7 @@ import com.huitian.po.base.StringIdPo;
 @Table(name = "HT_WORDBLANK")
 public class Wordblank extends StringIdPo{
 	/**
+<<<<<<< HEAD
 	 * id	int(32)	否		id
 name1	varchar(20)	否		毛坯名称
 maopiWeight	double	否		克重
@@ -74,6 +75,7 @@ public String getMaterial() {
 public void setMaterial(String material) {
 	this.material = material;
 }
+
 
 
 }

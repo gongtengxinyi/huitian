@@ -25,25 +25,10 @@ create_date	date	否	0	创建日期
 	private String picCode;// 图案编码
 	@Column(name = "IMGNAME", length = 60, columnDefinition = "VARCHAR(80) DEFAULT ''")
 	private String imgName;//图片名字
-	@Column(name = "ORDER", length = 60, columnDefinition = "VARCHAR(60) DEFAULT ''")
-	private String order;//顺序
-
-	
-	@Column(name = "PICURL", length = 70, columnDefinition = "VARCHAR(70) DEFAULT ''")
-	private String picUrl;//顺序
-	
-	public String getOrder() {
-		return order;
-	}
-	public void setOrder(String order) {
-		this.order = order;
-	}
-	public String getPicUrl() {
-		return picUrl;
-	}
-	public void setPicUrl(String picUrl) {
-		this.picUrl = picUrl;
-	}
+	@Column(name = "SUFFIX", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
+	private String suffix;//图片后缀
+	@Column(name = "imgUrl", length = 80, columnDefinition = "VARCHAR(80) DEFAULT ''")
+	private String imgUrl;//图片url
 	public String getImageTypeId() {
 		return imageTypeId;
 	}
@@ -68,5 +53,19 @@ create_date	date	否	0	创建日期
 	public void setImgName(String imgName) {
 		this.imgName = imgName;
 	}
+	public String getSuffix() {
+		return suffix;
+	}
+	public void setSuffix(String suffix) {
+		this.suffix = suffix;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 
+	
+	
 }

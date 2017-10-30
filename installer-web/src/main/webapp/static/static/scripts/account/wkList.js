@@ -1,0 +1,26 @@
+var app = angular.module('app', ['ui.bootstrap']);
+
+app.controller('WkListController',//
+['$scope', '$http', '$window',//
+function($scope, $http, $window) {
+	var pageNo=$("#pageNo").val();
+  $scope.query = function() {
+    $http.get('manager/findWkList.do', {
+      params : {
+        id : $scope.data.id
+      }
+    }).then(function(response) {
+      var data = response.data;
+      $scope.rows = data;
+    });
+  }
+
+  $scope.$watch('pager.currentPage', $scope.query);
+  
+  $scope.goBack = function () {
+   // $window.location.href = "manager/managerList.do?pageNo="+pageNo;
+	 // window.opener.location.reload();//刷新父页面
+	  window.close();
+  }
+
+}]);

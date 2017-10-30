@@ -20,8 +20,6 @@ create_date	date	否		创建日期
 	private String typeName;
 	@Column(name = "TYPECODE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String typeCode;
-	@Column(name = "ORDER", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
-	private String order;
 	public String getTypeName() {
 		return typeName;
 	}
@@ -34,13 +32,5 @@ create_date	date	否		创建日期
 	public void setTypeCode(String typeCode) {
 		this.typeCode = typeCode;
 	}
-	public String getOrder() {
-		return order;
-	}
-	public void setOrder(String order) {
-		this.order = order;
-	}
-
 	
-
 }
