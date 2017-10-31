@@ -31,7 +31,9 @@ public class ImageController {
 	
 	
 	@RequestMapping("addImage")
-	public String addImag() {
+	public String addImag(ModelMap map) {
+		List<ImageType> imageTypeList = imageTypeService.findAll();
+		map.put("imageTypeList", imageTypeList);
 		return "image/imageAdd";
 	}
 	/**
@@ -58,7 +60,8 @@ HashMap<String,Object> map =new HashMap<String,Object>();
 	
 	
 	@RequestMapping("addImageType")
-	public String addImageType() {
+	public String addImageType(ModelMap map) {
+
 		return "image/imageTypeAdd";
 	}
 	/**
