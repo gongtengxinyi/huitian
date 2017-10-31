@@ -16,6 +16,7 @@ name1	varchar(20)	是		类别名称
 order	varchar(20)	否		排序序号
 create_date	date	否		创建日期
 	 */
+	
 	@Column(name = "TYPENAME", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String typeName;
 	@Column(name = "TYPECODE", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")

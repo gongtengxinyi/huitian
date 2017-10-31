@@ -9,7 +9,7 @@
 <#include "/include/common-entry-grid.ftl" />
  <#include "/include/common-cityselect.ftl" />
 
-<script src="static/scripts/center/center.js?randomId=<%=Math.random()%>"></script>
+<script src="static/scripts/center/centeradd.js?randomId=<%=Math.random()%>"></script>
 
 </head>
 
