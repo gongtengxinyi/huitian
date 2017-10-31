@@ -27,7 +27,7 @@ create_date	date	否	0	创建日期
 	private String imgName;//图片名字
 	@Column(name = "SUFFIX", length = 45, columnDefinition = "VARCHAR(45) DEFAULT ''")
 	private String suffix;//图片后缀
-	@Column(name = "imgUrl", length = 80, columnDefinition = "VARCHAR(80) DEFAULT ''")
+	@Column(name = "IMGURL", length = 80, columnDefinition = "VARCHAR(80) DEFAULT ''")
 	private String imgUrl;//图片url
 	public String getImageTypeId() {
 		return imageTypeId;

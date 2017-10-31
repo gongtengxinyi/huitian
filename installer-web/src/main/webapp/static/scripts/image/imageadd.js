@@ -3,7 +3,7 @@ var app = angular
     ['ui.grid', 'ui.grid.edit', 'ui.grid.cellNav', 'ui.grid.validate', 'ui.bootstrap',
         'ifu.cityselect', 'ifu.form', 'ifu.util']);
 
-app.controller('wordblankAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
+app.controller('imageAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
                                           function($scope, $http, $window, UrlUtil, $uibModal) {
                                             $scope.data = {};
   $scope.goList = function() {

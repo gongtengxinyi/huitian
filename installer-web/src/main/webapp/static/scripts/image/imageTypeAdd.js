@@ -4,13 +4,13 @@ var app = angular
         'ifu.cityselect', 'ifu.form', 'ifu.util']);
 
 app.controller('imageTypeAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
-function($scope, $http, $window, UrlUtil, $uibModal,UrlUtil) {
+function($scope, $http, $window, UrlUtil, $uibModal) {
   $scope.data = {};
   $scope.goList = function() {
 	    $window.location.href = UrlUtil.transform('image/addImageType.do');
 	  }
   $scope.save = function() {
-	  alert("dd");
+	
     return $http({
       method : 'POST',
       url : 'image/saveImageType.do', 

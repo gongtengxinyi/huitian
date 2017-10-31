@@ -69,7 +69,19 @@
             </div>
           </div>
         
-          
+            <div class="row">
+             <div class="col-md-4">
+              <div class="form-group"
+                ng-class="{ 'has-error': form1.imageTypeId.$invalid && (form1.$submitted || form1.imageTypeId.$touched)}">
+                <label for="imageTypeId"
+                  class="control-label required col-md-4">上传图片：</label>
+                 <div class="col-md-8">
+                 	<input type="file" name="imgFiles" file-model="file.imgFiles"
+										accept="image/jpeg,image/png,image/gif,image/jpg" multiple />
+                </div>
+              </div>
+            </div>
+            </div>
                   <div class="row">
             <div class="col-md-10 col-md-offset-2">
               <button type="submit" class="btn btn-primary"

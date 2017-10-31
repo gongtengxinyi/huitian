@@ -1,7 +1,7 @@
 <#include "/include/common.ftl" />
-<title>账号管理查询</title>
+<title>毛坯列表</title>
 <#include "/include/common-list.ftl" />
-<script src="static/scripts/admin/adminList.js?randomId=<%=Math.random()%>"></script>
+<script src="static/scripts/wordblank/wordblanklist.js?randomId=<%=Math.random()%>"></script>
 </head>
 <body>
   <#include "/include/body-begin.ftl" />
