@@ -21,79 +21,54 @@
 
     <form name="form1" class="form-horizontal" novalidate>
       <div class="panel panel-default">
-        <div class="panel-heading">加工中心基本信息</div>
+        <div class="panel-heading">图片基本信息</div>
         <div class="panel-body">
 
           <div class="row">
              <div class="col-md-4">
               <div class="form-group"
-                ng-class="{ 'has-error': form1.maxDepth.$invalid && (form1.$submitted || form1.maxDepth.$touched)}">
-                <label for="maxDepth"
-                  class="control-label required col-md-4">最大深度：</label>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="maxDepth"
-                    name="maxDepth" ng-model="data.maxDepth"
-                    uib-tooltip="此项为必填项"
-                    tooltip-enable="form1.maxDepth.$invalid" required>
+                ng-class="{ 'has-error': form1.imageTypeId.$invalid && (form1.$submitted || form1.imageTypeId.$touched)}">
+                <label for="imageTypeId"
+                  class="control-label required col-md-4">图片类别名字：</label>
+                 <div class="col-md-8">
+                  <select class="form-control" ng-model="data.imageTypeId"
+                    name="imageTypeId" uib-tooltip="此项为必填项"
+                    tooltip-enable="form1.imageTypeId.$invalid" required>
+                    <#list imageTypeList as imageType>
+                    <option value="${imageType.id}">${imageType.typeName}</option>
+                    </#list>
+                  </select>
                 </div>
               </div>
             </div>
           
             <div class="col-md-4">
               <div class="form-group"
-                ng-class="{ 'has-error': form1.maopiNum.$invalid && (form1.$submitted || form1.maopiNum.$touched)}">
-                <label for="maopiNum"
-                  class="control-label required col-md-4">毛坯数量：</label>
+                ng-class="{ 'has-error': form1.picCode.$invalid && (form1.$submitted || form1.picCode.$touched)}">
+                <label for="picCode"
+                  class="control-label required col-md-4">图片code：</label>
                 <div class="col-md-8">
-                  <input type="text" class="form-control" id="maopiNum"
-                    name="maopiNum" ng-model="data.maopiNum"
+                  <input type="text" class="form-control" id="picCode"
+                    name="picCode" ng-model="data.picCode"
                     uib-tooltip="此项为必填项"
-                    tooltip-enable="form1.maopiNum.$invalid" required>
+                    tooltip-enable="form1.picCode.$invalid" required>
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group"
-                ng-class="{ 'has-error': form1.maxZhuanshu.$invalid && (form1.$submitted || form1.maxZhuanshu.$touched)}">
-                <label class="control-label required col-md-4">最大转数：</label>
+                ng-class="{ 'has-error': form1.imgName.$invalid && (form1.$submitted || form1.imgName.$touched)}">
+                <label class="control-label required col-md-4">图片名字：</label>
                 <div class="col-md-8">
-            <input type="text" class="form-control" id="maxZhuanshu"
-                    name="maxZhuanshu" ng-model="data.maxZhuanshu"
+            <input type="text" class="form-control" id="imgName"
+                    name="imgName" ng-model="data.imgName"
                     uib-tooltip="此项为必填项"
-                    tooltip-enable="form1.maxZhuanshu.$invalid" required>
+                    tooltip-enable="form1.imgName.$invalid" required>
                 </div>
               </div>
             </div>
           </div>
-          
-                <div class="row">
-             <div class="col-md-4">
-              <div class="form-group"
-                ng-class="{ 'has-error': form1.remarks.$invalid && (form1.$submitted || form1.remarks.$touched)}">
-                <label for="remarks"
-                  class="control-label required col-md-4">备注：</label>
-                <div class="col-md-8">
-              <textarea type="text" class="form-control" name="remarks"
-                ng-model="data.remarks" uib-tooltip="此项为必填项"
-                tooltip-enable="form1.remarks.$invalid" required></textarea>
-                </div>
-              </div>
-            </div>
-          
-            <div class="col-md-4">
-              <div class="form-group"
-                ng-class="{ 'has-error': form1.name1.$invalid && (form1.$submitted || form1.name1.$touched)}">
-                <label for="name1"
-                  class="control-label required col-md-4">加工中心名称：</label>
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="name1"
-                    name="name1" ng-model="data.name1"
-                    uib-tooltip="此项为必填项"
-                    tooltip-enable="form1.name1.$invalid" required>
-                </div>
-              </div>
-            </div>         
-          </div>
+        
           
                   <div class="row">
             <div class="col-md-10 col-md-offset-2">

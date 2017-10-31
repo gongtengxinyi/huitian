@@ -3,17 +3,17 @@ var app = angular
     ['ui.grid', 'ui.grid.edit', 'ui.grid.cellNav', 'ui.grid.validate', 'ui.bootstrap',
         'ifu.cityselect', 'ifu.form', 'ifu.util']);
 
-app.controller('imageAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
-function($scope, $http, $window, UrlUtil) {
-  $scope.data = {};
+app.controller('wordblankAddController', ['$scope', '$http', '$window', 'UrlUtil', '$uibModal',
+                                          function($scope, $http, $window, UrlUtil, $uibModal) {
+                                            $scope.data = {};
   $scope.goList = function() {
-	    $window.location.href = UrlUtil.transform('wordBlank/addWordBlank.do');
+	    $window.location.href = UrlUtil.transform('image/addImage.do');
 	  }
   $scope.save = function() {
     $("#saveBtn").attr("disabled", true);
     return $http({
       method : 'POST',
-      url : 'wordBlank/saveWordBlank.do', 
+      url : 'image/saveImage.do', 
       headers : {
         'Content-Type' : undefined
       },
@@ -36,13 +36,13 @@ function($scope, $http, $window, UrlUtil) {
       var data = response.data;
       if (data.success) {
         var modalScope = $scope.$new(true);
-        modalScope.message ="添加毛坯成功";
+        modalScope.message ="添加图片成功";
         UrlUtil.autoJump(modalScope, $scope.goList);
       } else {
     	  $("#saveBtn").attr("disabled", false);
         var modalScope = $scope.$new(true);
-        modalScope.title = "添加毛坯失败";
-        modalScope.message = "添加毛坯失败";
+        modalScope.title = "添加图片失败";
+        modalScope.message = "添加图片失败";
         $uibModal.open({
           templateUrl : 'template/modal/alert.html',
           scope : modalScope
